@@ -1074,7 +1074,7 @@
         }
 
         // ===== API CONFIG =====
-        const INFO_API_URL = 'https://mafuuuu-info-api.vercel.app/mafu-info?uid=';
+        const INFO_API_URL = 'https://info-api-green-theta.vercel.app/info?uid=';
         const AVATAR_CDN = 'https://cdn.jsdelivr.net/gh/ShahGCreator/icon@main/PNG/';
 
         // Cache for player info
@@ -1089,43 +1089,44 @@
                 if (!response.ok) throw new Error('API Error: ' + response.status);
                 const data = await response.json();
 
-                // The API returns data in data.basicInfo based on the provided response
-                // But it could also be flat - handle both cases
-                var profile = data;
-                if (data.basicInfo) profile = data.basicInfo;
-                else if (data.data && data.data.basicInfo) profile = data.data.basicInfo;
-                else if (data.data) profile = data.data;
+                // New API structure: info-api-green-theta.vercel.app/info?uid=
+                // Fields: AccountInfo.AccountAvatarId, AccountInfo.AccountName, AccountInfo.AccountLevel
+                var accountInfo = data.AccountInfo || {};
+                var socialInfo = data.socialInfo || {};
 
                 var name = 'Unknown';
                 var level = '?';
-                var headpic = null;
+                var avatarId = null;
 
-                // Extract name
-                if (profile.nickname) name = profile.nickname;
-                else if (profile.name) name = profile.name;
-                else if (profile.username) name = profile.username;
+                // Extract name from AccountInfo
+                if (accountInfo.AccountName) name = accountInfo.AccountName;
+                else if (accountInfo.nickname) name = accountInfo.nickname;
+                else if (socialInfo.signature) name = socialInfo.signature;
 
-                // Extract level
-                if (profile.level !== undefined && profile.level !== null) level = profile.level;
-                else if (profile.lvl !== undefined && profile.lvl !== null) level = profile.lvl;
+                // Extract level from AccountInfo
+                if (accountInfo.AccountLevel !== undefined && accountInfo.AccountLevel !== null) {
+                    level = accountInfo.AccountLevel;
+                } else if (accountInfo.level !== undefined && accountInfo.level !== null) {
+                    level = accountInfo.level;
+                }
 
-                // Extract headpic (avatar ID)
-                if (profile.headPic) headpic = profile.headPic;
-                else if (profile.headpic) headpic = profile.headpic;
-                else if (profile.avatarId) headpic = profile.avatarId;
-                else if (profile.avatar) headpic = profile.avatar;
+                // Extract avatar ID from AccountInfo
+                if (accountInfo.AccountAvatarId) avatarId = accountInfo.AccountAvatarId;
+                else if (accountInfo.headPic) avatarId = accountInfo.headPic;
+                else if (accountInfo.headpic) avatarId = accountInfo.headpic;
+                else if (accountInfo.avatarId) avatarId = accountInfo.avatarId;
 
                 // Build avatar URL
                 var avatarUrl = null;
-                if (headpic) {
-                    avatarUrl = AVATAR_CDN + headpic + '.png';
+                if (avatarId) {
+                    avatarUrl = AVATAR_CDN + avatarId + '.png';
                 }
 
                 var playerInfo = {
                     uid: uid,
                     name: name,
                     level: level,
-                    headpic: headpic,
+                    avatarId: avatarId,
                     avatarUrl: avatarUrl
                 };
 
@@ -1137,7 +1138,7 @@
                     uid: uid,
                     name: 'Player ' + uid.slice(-4),
                     level: '?',
-                    headpic: null,
+                    avatarId: null,
                     avatarUrl: 'https://ui-avatars.com/api/?name=' + uid.slice(-4) + '&background=667eea&color=fff&size=128'
                 };
                 playerCache[uid] = fallback;
