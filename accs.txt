@@ -1,0 +1,3 @@
+# Format: UID:PASSWORD
+# Example:
+4575104506:your_password_here
