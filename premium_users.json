@@ -1,0 +1,15 @@
+{
+  "6448344664": {
+    "plan": "lifetime",
+    "max_uids": "unlimited",
+    "spam_types": [
+      "normal",
+      "group_leader",
+      "self_protection",
+      "combined"
+    ],
+    "expiry": 4935977199.488876,
+    "added_by": "6448344664",
+    "added_at": "2026-06-25T14:46:39.488916"
+  }
+}
