@@ -7,3 +7,4 @@ cachetools==5.3.3
 gunicorn
 requests
 flask[async]
+aiohttp
