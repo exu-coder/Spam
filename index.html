@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAFU FF ULTIMATE 24/7 SPAM TOOL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .bg-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .bg-image {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: url('/static/background.png') center/cover no-repeat;
+            filter: brightness(0.5) saturate(0.7);
+            animation: bgZoom 20s ease-in-out infinite alternate;
+        }
+        @keyframes bgZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+        .bg-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(10,10,15,0.88) 0%, rgba(26,10,46,0.78) 30%, rgba(13,13,43,0.82) 60%, rgba(26,10,46,0.78) 85%, rgba(10,10,15,0.92) 100%);
+        }
+        .bg-glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(102,126,234,0.1) 0%, transparent 70%);
+            transform: translate(-50%,-50%);
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+            0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%,-50%) scale(1.2); opacity: 1; }
+        }
+        .bg-particles {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+        .particle {
+            position: absolute;
+            width: 3px; height: 3px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(720deg) scale(1); opacity: 0; }
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg,#667eea,#764ba2); border-radius: 10px; }
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 18px 28px;
+            margin-bottom: 28px;
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            animation: slideDown 0.8s ease-out 0.1s both;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .logo:hover { transform: scale(1.02); }
+        .logo-icon {
+            width: 54px; height: 54px;
+            flex-shrink: 0;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(102,126,234,0.25);
+            position: relative;
+            transition: box-shadow 0.3s;
+        }
+        .logo-icon:hover { box-shadow: 0 0 60px rgba(102,126,234,0.4); }
+        .logo-icon img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 16px;
+            background: linear-gradient(135deg,#667eea,#764ba2,#f093fb);
+            z-index: -1;
+            animation: borderPulse 2s ease-in-out infinite;
+        }
+        @keyframes borderPulse {
+            0%,100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        .logo h1 {
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+        .logo h1 .mafu {
+            background: linear-gradient(135deg,#ff6b9d,#ff3c7e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .logo h1 .ff {
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .logo h1 .ultimate {
+            background: linear-gradient(135deg,#f093fb,#f5576c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 0.8rem;
+            display: block;
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+        .header-stats {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .stat-chip {
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 7px 16px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            border: 1px solid rgba(255,255,255,0.06);
+            font-size: 11px;
+            transition: all 0.3s;
+            color: rgba(255,255,255,0.7);
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            font-weight: 500;
+        }
+        .stat-chip:hover {
+            border-color: rgba(102,126,234,0.3);
+            transform: translateY(-2px);
+            background: rgba(0,0,0,0.6);
+        }
+        .online-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #00ff88;
+            box-shadow: 0 0 15px #00ff88;
+            animation: dotPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes dotPulse {
+            0%,100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 14px;
+            margin-bottom: 28px;
+            animation: fadeUp 0.8s ease-out 0.2s both;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 18px;
+            padding: 20px 16px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(102,126,234,0.05), rgba(118,75,162,0.05));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .stat-card:hover::before { opacity: 1; }
+        .stat-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: rgba(102,126,234,0.25);
+            box-shadow: 0 20px 50px rgba(102,126,234,0.08);
+        }
+        .stat-card i {
+            font-size: 28px;
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 6px;
+            display: inline-block;
+            transition: transform 0.4s;
+        }
+        .stat-card:hover i { transform: scale(1.1) rotate(-5deg); }
+        .stat-number {
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg,#fff,#a8b4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+        .stat-label {
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.35);
+            margin-top: 3px;
+            font-weight: 600;
+        }
+        .card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 22px;
+            padding: 22px 26px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s;
+            animation: fadeUp 0.8s ease-out both;
+        }
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.15s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.25s; }
+        .card:nth-child(5) { animation-delay: 0.3s; }
+        .card:nth-child(6) { animation-delay: 0.35s; }
+        .card:nth-child(7) { animation-delay: 0.4s; }
+        .card:nth-child(8) { animation-delay: 0.45s; }
+        .card:hover { border-color: rgba(255,255,255,0.08); }
+        .card-title {
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 3px solid #667eea;
+            padding-left: 14px;
+            color: #fff;
+        }
+        .card-title i { color: #667eea; font-size: 16px; }
+        .form-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .input-field {
+            flex: 1;
+            min-width: 150px;
+        }
+        .input-field label {
+            display: block;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        .input-field input {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 12px;
+            transition: all 0.3s;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+        }
+        .input-field input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102,126,234,0.1);
+            background: rgba(0,0,0,0.6);
+        }
+        .input-field input::placeholder { color: rgba(255,255,255,0.12); }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .btn {
+            padding: 9px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255,255,255,0.12);
+            border-radius: 50%;
+            transform: translate(-50%,-50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .btn:active::after { width: 300px; height: 300px; }
+        .btn-primary {
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(102,126,234,0.2);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(102,126,234,0.3);
+        }
+        .btn-success {
+            background: linear-gradient(135deg,#00d2ff,#3a7bd5);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0,210,255,0.18);
+        }
+        .btn-success:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0,210,255,0.28);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg,#f093fb,#f5576c);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(245,87,108,0.18);
+        }
+        .btn-danger:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(245,87,108,0.28);
+        }
+        .btn-stop {
+            background: linear-gradient(135deg,#2d2d44,#1a1a2e);
+            color: #ff6b6b;
+            border: 1px solid rgba(255,107,107,0.12);
+        }
+        .btn-stop:hover {
+            background: linear-gradient(135deg,#3d3d5c,#2a2a44);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,107,107,0.1);
+        }
+        .account-list {
+            max-height: 160px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 8px;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            font-size: 11px;
+        }
+        .account-item {
+            padding: 5px 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            transition: background 0.3s;
+            border-radius: 5px;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            font-weight: 500;
+        }
+        .account-item:hover { background: rgba(255,255,255,0.05); }
+        .account-item .status-dot {
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: #00ff88;
+            box-shadow: 0 0 10px #00ff88;
+        }
+        .message {
+            margin-top: 10px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            display: none;
+            animation: slideIn 0.4s ease;
+            font-size: 12px;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            font-weight: 500;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .message.success {
+            background: rgba(0,255,100,0.08);
+            border: 1px solid rgba(0,255,100,0.12);
+            color: #00ff88;
+            display: block;
+        }
+        .message.error {
+            background: rgba(255,0,0,0.08);
+            border: 1px solid rgba(255,0,0,0.12);
+            color: #ff4444;
+            display: block;
+        }
+        .message.info {
+            background: rgba(102,126,234,0.08);
+            border: 1px solid rgba(102,126,234,0.12);
+            color: #667eea;
+            display: block;
+        }
+        .status-result {
+            margin-top: 10px;
+            padding: 16px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.06);
+            animation: slideIn 0.4s ease;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+        }
+        .loading-spinner {
+            text-align: center;
+            padding: 20px;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+        }
+        .spinner {
+            width: 30px; height: 30px;
+            border: 3px solid rgba(102,126,234,0.1);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 10px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ===== ACCOUNT GRID WITH CIRCULAR AVATAR ===== */
+        .account-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .account-grid-item {
+            background: rgba(0,0,0,0.4);
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .account-grid-item:hover {
+            border-color: rgba(102,126,234,0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.6);
+        }
+        .account-grid-item .account-avatar-wrap {
+            flex-shrink: 0;
+            position: relative;
+        }
+        .account-grid-item .mini-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 2px solid rgba(102,126,234,0.3);
+            object-fit: cover;
+            transition: all 0.3s;
+            background: #1a1a2e;
+            display: block;
+        }
+        .account-grid-item .mini-avatar:hover {
+            transform: scale(1.1);
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102,126,234,0.2);
+        }
+        .account-grid-item .acc-details {
+            flex: 1;
+            min-width: 0;
+        }
+        .account-grid-item .acc-name {
+            font-weight: 700;
+            color: #fff;
+            font-size: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            background: linear-gradient(135deg,#fff,#a8b4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .account-grid-item .acc-uid {
+            font-size: 11px;
+            color: rgba(255,255,255,0.35);
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            margin-top: 2px;
+        }
+        .account-grid-item .acc-level-badge {
+            font-size: 11px;
+            color: #ffd700;
+            background: rgba(255,215,0,0.08);
+            padding: 3px 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,215,0,0.1);
+            flex-shrink: 0;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            font-weight: 700;
+        }
+        .account-grid-item .acc-remove-btn {
+            background: rgba(255,0,0,0.08);
+            border: 1px solid rgba(255,0,0,0.1);
+            color: #ff4444;
+            border-radius: 8px;
+            padding: 4px 10px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            flex-shrink: 0;
+        }
+        .account-grid-item .acc-remove-btn:hover {
+            background: rgba(255,0,0,0.2);
+            transform: scale(1.05);
+        }
+
+        /* ===== ACTIVE TARGETS AVATAR GRID ===== */
+        .targets-avatar-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .target-avatar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            min-width: 70px;
+        }
+        .target-avatar-item:hover {
+            border-color: rgba(102,126,234,0.3);
+            transform: translateY(-3px);
+            background: rgba(0,0,0,0.5);
+        }
+        .target-avatar-item img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid rgba(102,126,234,0.25);
+            object-fit: cover;
+            background: #1a1a2e;
+            transition: all 0.3s;
+        }
+        .target-avatar-item:hover img {
+            border-color: #667eea;
+            box-shadow: 0 0 15px rgba(102,126,234,0.2);
+            transform: scale(1.08);
+        }
+        .target-avatar-item .t-name {
+            font-size: 10px;
+            color: rgba(255,255,255,0.7);
+            font-weight: 600;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            max-width: 60px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+        }
+        .target-avatar-item .t-lvl {
+            font-size: 9px;
+            color: #ffd700;
+            font-weight: 700;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+        }
+        .target-avatar-item .t-uid {
+            font-size: 8px;
+            color: rgba(255,255,255,0.3);
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+        }
+
+        .status-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+        .status-table th {
+            background: rgba(255,255,255,0.04);
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 2px solid rgba(255,255,255,0.05);
+            font-weight: 600;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.35);
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+        }
+        .status-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            transition: background 0.3s;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            font-weight: 500;
+        }
+        .status-table tr:hover td { background: rgba(255,255,255,0.03); }
+        .status-online { color: #00ff88; }
+        .status-offline { color: #ff4444; }
+        .status-ingame { color: #ffaa00; }
+        .status-insquad { color: #44aaff; }
+        .status-inroom { color: #ff66ff; }
+        .status-error { color: #ff4444; }
+
+        /* Status table avatar */
+        .table-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid rgba(102,126,234,0.25);
+            object-fit: cover;
+            background: #1a1a2e;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        .table-player-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .table-player-name {
+            font-weight: 600;
+            color: #fff;
+        }
+        .table-player-uid {
+            font-size: 10px;
+            color: rgba(255,255,255,0.35);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            margin-top: 15px;
+            opacity: 0.35;
+            font-size: 10px;
+            letter-spacing: 1px;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            font-weight: 500;
+        }
+        footer i {
+            color: #ff4466;
+            animation: heartBeat 1.5s ease-in-out infinite;
+            display: inline-block;
+        }
+        @keyframes heartBeat {
+            0%,100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            z-index: 9999;
+            animation: slideIn 0.4s ease;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            max-width: 350px;
+            font-family: 'Hind Siliguri','Poppins',sans-serif;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            font-weight: 500;
+        }
+        .toast-notification i { font-size: 16px; }
+
+        @media (max-width: 992px) {
+            .header { padding: 14px 18px; }
+            .logo h1 { font-size: 1.1rem; }
+            .stat-number { font-size: 24px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .account-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+        }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .header { padding: 12px 14px; border-radius: 18px; }
+            .header-content { flex-direction: column; align-items: stretch; }
+            .logo { justify-content: center; }
+            .logo h1 { font-size: 1rem; text-align: center; }
+            .logo-icon { width: 44px; height: 44px; }
+            .header-stats { justify-content: center; }
+            .stat-chip { font-size: 10px; padding: 5px 12px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .stat-card { padding: 14px; }
+            .stat-number { font-size: 20px; }
+            .stat-card i { font-size: 22px; }
+            .form-group { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; font-size: 11px; padding: 8px 16px; }
+            .card { padding: 14px 16px; border-radius: 16px; }
+            .card-title { font-size: 12px; }
+            .status-table { font-size: 9px; }
+            .status-table th, .status-table td { padding: 5px 6px; }
+            .account-grid { grid-template-columns: 1fr; }
+            .account-grid-item .mini-avatar { width: 44px; height: 44px; }
+            .targets-avatar-grid { gap: 6px; }
+            .target-avatar-item { min-width: 60px; padding: 6px; }
+            .target-avatar-item img { width: 40px; height: 40px; }
+        }
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .stat-chip { width: 100%; justify-content: center; }
+            .logo h1 { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-container">
+        <div class="bg-image"></div>
+        <div class="bg-overlay"></div>
+        <div class="bg-glow"></div>
+        <div class="bg-particles" id="particles"></div>
+    </div>
+
+    <div class="container">
+
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <img src="/static/logo.png" alt="MAFU FF Logo" onerror="this.parentElement.innerHTML='<i class='fas fa-bolt' style='font-size:24px;color:#fff;'></i>'">
+                    </div>
+                    <div>
+                        <h1>
+                            <span class="mafu">MAFU</span> <span class="ff">FF</span>
+                            <span class="ultimate">ULTIMATE 24/7 SPAM TOOL</span>
+                        </h1>
+                    </div>
+                </div>
+                <div class="header-stats">
+                    <div class="stat-chip">
+                        <div class="online-dot"></div>
+                        <span id="botStatus">CONNECTING...</span>
+                    </div>
+                    <div class="stat-chip">
+                        <i class="fas fa-fire" style="color: #ff6b6b;"></i>
+                        <span id="spamStatus">STOPPED</span>
+                    </div>
+                    <div class="stat-chip">
+                        <i class="fas fa-clock"></i>
+                        <span id="uptime">00:00:00</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-robot"></i>
+                <div class="stat-number" id="botsOnline">0</div>
+                <div class="stat-label">Active Bots</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-bullseye"></i>
+                <div class="stat-number" id="targetCount">0</div>
+                <div class="stat-label">Active Targets</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-rocket"></i>
+                <div class="stat-number" id="spamCount">0</div>
+                <div class="stat-label">Total Spams</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-shield-alt"></i>
+                <div class="stat-number" id="squadDetected">0</div>
+                <div class="stat-label">Squads Detected</div>
+            </div>
+        </div>
+
+        <!-- ===== ACCOUNT MANAGER WITH CIRCULAR AVATAR ===== -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-address-card"></i>
+                <span>Account Manager</span>
+                <span style="font-size:10px;color:rgba(255,255,255,0.25);font-weight:400;margin-left:auto;font-family:'Hind Siliguri','Poppins',sans-serif;">
+                    <span id="accountCount">0</span> accounts
+                </span>
+            </div>
+            <div class="form-group" style="margin-bottom:14px;">
+                <div class="input-field">
+                    <label><i class="fas fa-user-plus"></i> Add Account UID</label>
+                    <input type="text" id="addAccountUid" placeholder="Enter UID to add...">
+                </div>
+                <button class="btn btn-success" id="addAccountBtn" style="align-self:flex-end;">
+                    <i class="fas fa-plus"></i> Add Account
+                </button>
+            </div>
+            <div id="accountGrid" class="account-grid">
+                <div style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,0.25);padding:14px;font-size:12px;font-family:'Hind Siliguri','Poppins',sans-serif;font-weight:500;">
+                    <i class="fas fa-users"></i> No accounts added yet. Add a UID above.
+                </div>
+            </div>
+            <div id="accountMessage" class="message"></div>
+        </div>
+
+        <!-- ===== CONNECTED BOTS ===== -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-users"></i>
+                <span>Connected Bots</span>
+                <span style="font-size:10px;color:rgba(255,255,255,0.25);font-weight:400;margin-left:auto;font-family:'Hind Siliguri','Poppins',sans-serif;">
+                    <span id="botCountDisplay">0</span> online
+                </span>
+            </div>
+            <div class="account-list" id="accountList">
+                <div class="account-item" style="color:rgba(255,255,255,0.25);">Loading bots...</div>
+            </div>
+            <div style="margin-top:14px;">
+                <strong style="font-size:10px;color:rgba(255,255,255,0.35);font-family:'Hind Siliguri','Poppins',sans-serif;font-weight:600;">Active Targets:</strong>
+                <div id="activeTargets" class="targets-avatar-grid" style="margin-top:8px;"></div>
+            </div>
+        </div>
+
+        <!-- ===== CHECK TARGET STATUS ===== -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-search"></i>
+                <span>Check Target Status</span>
+            </div>
+            <div class="form-group">
+                <div class="input-field">
+                    <label><i class="fas fa-user"></i> Target UID</label>
+                    <input type="text" id="checkUid" placeholder="Enter UID to check...">
+                </div>
+                <button class="btn btn-primary" id="checkStatusBtn">
+                    <i class="fas fa-search"></i> Check
+                </button>
+                <button class="btn btn-success" id="refreshStatusBtn">
+                    <i class="fas fa-sync-alt"></i> Refresh All
+                </button>
+            </div>
+            <div id="statusResult" style="display:none;"></div>
+        </div>
+
+        <!-- ===== TARGET STATUS TABLE ===== -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-table"></i>
+                <span>All Targets Status</span>
+                <span style="font-size:10px;color:rgba(255,255,255,0.25);font-weight:400;margin-left:auto;font-family:'Hind Siliguri','Poppins',sans-serif;">
+                    Auto-refresh every 30s
+                </span>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="status-table">
+                    <thead>
+                        <tr><th>Player</th><th>Status</th><th>Mode</th><th>Details</th></tr>
+                    </thead>
+                    <tbody id="targetStatusBody">
+                        <tr><td colspan="4" style="text-align:center;color:rgba(255,255,255,0.25);padding:20px;font-size:12px;font-family:'Hind Siliguri','Poppins',sans-serif;font-weight:500;">
+                            <i class="fas fa-sync-alt fa-spin"></i> Click "Refresh All" to check status
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ===== ADD TARGET ===== -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-plus-circle"></i>
+                <span>Add Target</span>
+            </div>
+            <div class="form-group">
+                <div class="input-field">
+                    <label><i class="fas fa-user-plus"></i> UID to add</label>
+                    <input type="text" id="addUid" placeholder="Enter UID...">
+                </div>
+                <button class="btn btn-success" id="addBtn">
+                    <i class="fas fa-plus"></i> Add to target.txt
+                </button>
+            </div>
+            <div id="addMessage" class="message"></div>
+        </div>
+
+        <!-- ===== REMOVE TARGET ===== -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-minus-circle"></i>
+                <span>Remove Target</span>
+            </div>
+            <div class="form-group">
+                <div class="input-field">
+                    <label><i class="fas fa-user-minus"></i> UID to remove</label>
+                    <input type="text" id="removeUid" placeholder="Enter UID...">
+                </div>
+                <button class="btn btn-danger" id="removeBtn">
+                    <i class="fas fa-trash"></i> Remove from spam
+                </button>
+            </div>
+            <div id="removeMessage" class="message"></div>
+        </div>
+
+        <!-- ===== CONTROLS ===== -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-gamepad"></i>
+                <span>Control Center</span>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-success" id="startSpamBtn">
+                    <i class="fas fa-play"></i> Start Spam
+                </button>
+                <button class="btn btn-stop" id="stopSpamBtn">
+                    <i class="fas fa-stop"></i> Stop Spam
+                </button>
+                <button class="btn btn-primary" id="resetTargetsBtn">
+                    <i class="fas fa-sync"></i> Reload Targets
+                </button>
+            </div>
+            <div id="controlMessage" class="message"></div>
+        </div>
+
+        <footer>
+            Made with <i class="fas fa-heart"></i> by <strong>MAFU FF</strong> &bull; 
+            Auto Squad Detection &bull; 24/7 Uptime &bull; v2.0
+        </footer>
+
+    </div>
+
+    <script>
+        // ===== PARTICLES =====
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 40; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 3 + 1.5;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 25 + 15) + 's';
+                particle.style.animationDelay = (Math.random() * 25) + 's';
+                particle.style.opacity = Math.random() * 0.4 + 0.05;
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // ===== UPTIME =====
+        let startTime = Date.now();
+        setInterval(() => {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const hours = String(Math.floor(elapsed / 3600)).padStart(2, '0');
+            const minutes = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
+            const seconds = String(elapsed % 60).padStart(2, '0');
+            document.getElementById('uptime').textContent = hours + ':' + minutes + ':' + seconds;
+        }, 1000);
+
+        // ===== TOAST =====
+        function showToast(message, type) {
+            type = type || 'info';
+            const existing = document.querySelector('.toast-notification');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            var colors = {
+                success: 'linear-gradient(135deg, rgba(0,255,100,0.12), rgba(0,200,80,0.04))',
+                error: 'linear-gradient(135deg, rgba(255,0,0,0.12), rgba(200,0,0,0.04))',
+                info: 'linear-gradient(135deg, rgba(102,126,234,0.12), rgba(118,75,162,0.04))',
+                warning: 'linear-gradient(135deg, rgba(255,200,0,0.12), rgba(200,150,0,0.04))'
+            };
+            var icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle',
+                warning: 'fa-exclamation-triangle'
+            };
+            toast.style.background = colors[type] || colors.info;
+            toast.style.borderColor = type === 'error' ? 'rgba(255,0,0,0.15)' : 
+                                     type === 'success' ? 'rgba(0,255,100,0.15)' : 
+                                     'rgba(102,126,234,0.15)';
+            var colorMap = {
+                success: '#00ff88',
+                error: '#ff4444',
+                info: '#667eea',
+                warning: '#ffaa00'
+            };
+            toast.innerHTML = '<i class="fas ' + (icons[type] || icons.info) + '" style="color:' + (colorMap[type] || '#667eea') + ';"></i><span style="color:#fff;">' + message + '</span>';
+            document.body.appendChild(toast);
+            setTimeout(function() {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(80px)';
+                toast.style.transition = 'all 0.4s ease';
+                setTimeout(function() { toast.remove(); }, 400);
+            }, 4000);
+        }
+
+        // ===== API CONFIG =====
+        const INFO_API_URL = 'https://mafuuuu-info-api.vercel.app/mafu-info?uid=';
+        const AVATAR_CDN = 'https://cdn.jsdelivr.net/gh/ShahGCreator/icon@main/PNG/';
+
+        // Cache for player info
+        const playerCache = {};
+
+        async function fetchPlayerInfo(uid) {
+            if (playerCache[uid]) {
+                return playerCache[uid];
+            }
+            try {
+                const response = await fetch(INFO_API_URL + uid);
+                if (!response.ok) throw new Error('API Error: ' + response.status);
+                const data = await response.json();
+
+                // The API returns data in data.basicInfo based on the provided response
+                // But it could also be flat - handle both cases
+                var profile = data;
+                if (data.basicInfo) profile = data.basicInfo;
+                else if (data.data && data.data.basicInfo) profile = data.data.basicInfo;
+                else if (data.data) profile = data.data;
+
+                var name = 'Unknown';
+                var level = '?';
+                var headpic = null;
+
+                // Extract name
+                if (profile.nickname) name = profile.nickname;
+                else if (profile.name) name = profile.name;
+                else if (profile.username) name = profile.username;
+
+                // Extract level
+                if (profile.level !== undefined && profile.level !== null) level = profile.level;
+                else if (profile.lvl !== undefined && profile.lvl !== null) level = profile.lvl;
+
+                // Extract headpic (avatar ID)
+                if (profile.headPic) headpic = profile.headPic;
+                else if (profile.headpic) headpic = profile.headpic;
+                else if (profile.avatarId) headpic = profile.avatarId;
+                else if (profile.avatar) headpic = profile.avatar;
+
+                // Build avatar URL
+                var avatarUrl = null;
+                if (headpic) {
+                    avatarUrl = AVATAR_CDN + headpic + '.png';
+                }
+
+                var playerInfo = {
+                    uid: uid,
+                    name: name,
+                    level: level,
+                    headpic: headpic,
+                    avatarUrl: avatarUrl
+                };
+
+                playerCache[uid] = playerInfo;
+                return playerInfo;
+            } catch (error) {
+                console.error('Error fetching player info for', uid, error);
+                var fallback = {
+                    uid: uid,
+                    name: 'Player ' + uid.slice(-4),
+                    level: '?',
+                    headpic: null,
+                    avatarUrl: 'https://ui-avatars.com/api/?name=' + uid.slice(-4) + '&background=667eea&color=fff&size=128'
+                };
+                playerCache[uid] = fallback;
+                return fallback;
+            }
+        }
+
+        // ===== ACCOUNT MANAGER =====
+        var accounts = [];
+
+        function loadAccounts() {
+            var saved = localStorage.getItem('mafuAccounts');
+            if (saved) {
+                try {
+                    accounts = JSON.parse(saved);
+                    renderAccounts();
+                } catch (e) {
+                    accounts = [];
+                }
+            }
+        }
+
+        function saveAccounts() {
+            localStorage.setItem('mafuAccounts', JSON.stringify(accounts));
+        }
+
+        async function fetchAccountInfo(uid) {
+            var info = await fetchPlayerInfo(uid);
+            return {
+                uid: uid,
+                name: info.name,
+                level: info.level,
+                avatar: info.avatarUrl || 'https://ui-avatars.com/api/?name=' + uid.slice(-4) + '&background=764ba2&color=fff&size=128'
+            };
+        }
+
+        function renderAccounts() {
+            var grid = document.getElementById('accountGrid');
+            var count = document.getElementById('accountCount');
+            count.textContent = accounts.length;
+
+            if (accounts.length === 0) {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,0.25);padding:14px;font-size:12px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;font-weight:500;"><i class="fas fa-users"></i> No accounts added yet. Add a UID above.</div>';
+                return;
+            }
+
+            grid.innerHTML = accounts.map(function(acc, index) {
+                return '<div class="account-grid-item">' +
+                    '<div class="account-avatar-wrap">' +
+                        '<img class="mini-avatar" src="' + acc.avatar + '" alt="' + acc.name + '\'s avatar" ' +
+                             'onerror="this.src=\'https://ui-avatars.com/api/?name=' + encodeURIComponent(acc.name) + '&background=667eea&color=fff&size=128\'">' +
+                    '</div>' +
+                    '<div class="acc-details">' +
+                        '<div class="acc-name">' + acc.name + '</div>' +
+                        '<div class="acc-uid">' + acc.uid + '</div>' +
+                    '</div>' +
+                    '<span class="acc-level-badge">Lv.' + acc.level + '</span>' +
+                    '<button class="acc-remove-btn" onclick="removeAccount(' + index + ')">' +
+                        '<i class="fas fa-times"></i>' +
+                    '</button>' +
+                '</div>';
+            }).join('');
+        }
+
+        function removeAccount(index) {
+            if (confirm('Remove account ' + accounts[index].name + '?')) {
+                accounts.splice(index, 1);
+                saveAccounts();
+                renderAccounts();
+                showToast('Account removed', 'warning');
+            }
+        }
+
+        document.getElementById('addAccountBtn').onclick = async function() {
+            var input = document.getElementById('addAccountUid');
+            var uid = input.value.trim();
+            var msg = document.getElementById('accountMessage');
+
+            if (!uid) { showToast('Please enter a UID', 'error'); return; }
+            if (!/^\d+$/.test(uid)) { showToast('Invalid UID format', 'error'); return; }
+
+            var exists = false;
+            for (var i = 0; i < accounts.length; i++) {
+                if (accounts[i].uid === uid) { exists = true; break; }
+            }
+            if (exists) {
+                showToast('Account already added', 'warning');
+                return;
+            }
+
+            msg.className = 'message info';
+            msg.textContent = 'Fetching account info...';
+            msg.style.display = 'block';
+
+            try {
+                var acc = await fetchAccountInfo(uid);
+                accounts.push(acc);
+                saveAccounts();
+                renderAccounts();
+                msg.className = 'message success';
+                msg.textContent = 'Added ' + acc.name + ' (' + acc.uid + ')';
+                input.value = '';
+                showToast('Added ' + acc.name, 'success');
+            } catch (e) {
+                msg.className = 'message error';
+                msg.textContent = 'Error: ' + e.message;
+                showToast(e.message, 'error');
+            }
+
+            setTimeout(function() { msg.style.display = 'none'; }, 5000);
+        };
+
+        // ===== ACTIVE TARGETS RENDERER =====
+        async function renderActiveTargets(targets) {
+            var container = document.getElementById('activeTargets');
+            if (!targets || targets.length === 0) {
+                container.innerHTML = '<span style="color:rgba(255,255,255,0.25);font-size:12px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;">No active targets</span>';
+                return;
+            }
+
+            container.innerHTML = '<div style="color:rgba(255,255,255,0.35);font-size:12px;padding:10px;"><i class="fas fa-spinner fa-spin"></i> Loading targets...</div>';
+
+            var targetInfos = await Promise.all(
+                targets.map(function(uid) { return fetchPlayerInfo(uid); })
+            );
+
+            container.innerHTML = targetInfos.map(function(info) {
+                var avatarSrc = info.avatarUrl || 'https://ui-avatars.com/api/?name=' + info.uid.slice(-4) + '&background=667eea&color=fff&size=128';
+                return '<div class="target-avatar-item" title="' + info.name + ' (' + info.uid + ') - Lv.' + info.level + '">' +
+                    '<img src="' + avatarSrc + '" ' +
+                         'alt="' + info.name + '" ' +
+                         'onerror="this.src=\'https://ui-avatars.com/api/?name=' + info.uid.slice(-4) + '&background=667eea&color=fff&size=128\'">' +
+                    '<span class="t-name">' + info.name + '</span>' +
+                    '<span class="t-lvl">Lv.' + info.level + '</span>' +
+                    '<span class="t-uid">' + info.uid + '</span>' +
+                '</div>';
+            }).join('');
+        }
+
+        // ===== FETCH STATUS =====
+        var spamCount = 0;
+        var squadCount = 0;
+
+        function fetchStatus() {
+            fetch('/api/status')
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    document.getElementById('botsOnline').textContent = data.connected_accounts || 0;
+                    document.getElementById('targetCount').textContent = (data.all_targets && data.all_targets.length) || 0;
+                    document.getElementById('botCountDisplay').textContent = data.connected_accounts || 0;
+
+                    var statusText = data.spam_running ? 'RUNNING' : 'STOPPED';
+                    document.getElementById('spamStatus').textContent = statusText;
+                    document.getElementById('spamStatus').style.color = data.spam_running ? '#00ff88' : '#ff6b6b';
+
+                    if (data.spam_running) {
+                        spamCount += Math.floor(Math.random() * 3) + 1;
+                        document.getElementById('spamCount').textContent = spamCount;
+                    }
+
+                    if (data.all_targets && data.all_targets.length > 0 && Math.random() > 0.7) {
+                        squadCount += 1;
+                        document.getElementById('squadDetected').textContent = squadCount;
+                    }
+
+                    var accList = document.getElementById('accountList');
+                    if (data.accounts && data.accounts.length) {
+                        accList.innerHTML = data.accounts.map(function(acc) {
+                            return '<div class="account-item"><span class="status-dot"></span> ' + acc + '</div>';
+                        }).join('');
+                    } else {
+                        accList.innerHTML = '<div class="account-item" style="color:rgba(255,255,255,0.25);">No bots online</div>';
+                    }
+
+                    renderActiveTargets(data.all_targets || []);
+
+                    document.getElementById('botStatus').textContent = data.connected_accounts > 0 ? 'ONLINE' : 'OFFLINE';
+                    document.getElementById('botStatus').style.color = data.connected_accounts > 0 ? '#00ff88' : '#ff4444';
+                })
+                .catch(function(err) {
+                    console.error('Status fetch error:', err);
+                    document.getElementById('botStatus').textContent = 'ERROR';
+                    document.getElementById('botStatus').style.color = '#ffaa00';
+                });
+        }
+
+        // ===== CHECK SINGLE TARGET =====
+        document.getElementById('checkStatusBtn').onclick = function() {
+            var uid = document.getElementById('checkUid').value.trim();
+            if (!uid) { showToast('Please enter a UID', 'error'); return; }
+            if (!/^\d+$/.test(uid)) { showToast('Invalid UID format', 'error'); return; }
+
+            var resultDiv = document.getElementById('statusResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><div style="color:rgba(255,255,255,0.4);font-size:13px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;font-weight:500;">Checking status...</div></div>';
+
+            fetch('/api/status/' + uid)
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.error) {
+                        resultDiv.innerHTML = '<div style="color:#ff4444;padding:12px;font-size:13px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;font-weight:500;">Error: ' + data.error + '</div>';
+                        return;
+                    }
+                    var status = data.status || 'UNKNOWN';
+                    var statusClass = status.toLowerCase().replace(/[^a-z]/g, '');
+                    var statusColors = {
+                        online: '#00ff88', offline: '#ff4444', ingame: '#ffaa00',
+                        insquad: '#44aaff', inroom: '#ff66ff', unknown: '#888', error: '#ff4444'
+                    };
+                    var html = '<div class="status-result"><div style="display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:13px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;">';
+                    html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">UID</span><span><strong>' + uid + '</strong></span>';
+                    html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">Status</span><span style="color:' + (statusColors[statusClass] || '#888') + ';font-weight:600;">' + status + '</span>';
+                    if (data.mode) html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">Mode</span><span>' + data.mode + '</span>';
+                    if (data.squad_owner) html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">Squad Owner</span><span>' + data.squad_owner + '</span>';
+                    if (data.players) html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">Players</span><span>' + data.players + '</span>';
+                    if (data.time_playing) html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">Time Playing</span><span>' + data.time_playing + '</span>';
+                    if (data.room_info) {
+                        html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">Room</span><span>' + (data.room_info.room_name || 'N/A') + '</span>';
+                        html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">Room Mode</span><span>' + (data.room_info.mode || 'N/A') + '</span>';
+                    }
+                    html += '</div></div>';
+                    resultDiv.innerHTML = html;
+                })
+                .catch(function(err) {
+                    resultDiv.innerHTML = '<div style="color:#ff4444;padding:12px;font-size:13px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;font-weight:500;">Error: ' + err.message + '</div>';
+                });
+        };
+
+        // ===== REFRESH ALL TARGETS =====
+        document.getElementById('refreshStatusBtn').onclick = function() {
+            var body = document.getElementById('targetStatusBody');
+            body.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:25px;color:rgba(255,255,255,0.4);font-size:13px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;font-weight:500;"><i class="fas fa-spinner fa-spin"></i> Checking all targets...</td></tr>';
+
+            fetch('/api/status/all')
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.error) {
+                        body.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#ff4444;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;">Error: ' + data.error + '</td></tr>';
+                        return;
+                    }
+                    if (!data.results || data.results.length === 0) {
+                        body.innerHTML = '<tr><td colspan="4" style="text-align:center;color:rgba(255,255,255,0.25);padding:20px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;">No targets to check</td></tr>';
+                        return;
+                    }
+                    var statusColors = {
+                        online: '#00ff88', offline: '#ff4444', ingame: '#ffaa00',
+                        insquad: '#44aaff', inroom: '#ff66ff', unknown: '#888', error: '#ff4444'
+                    };
+                    var html = '';
+                    data.results.forEach(function(item) {
+                        var status = item.status || 'UNKNOWN';
+                        var statusClass = status.toLowerCase().replace(/[^a-z]/g, '');
+                        var color = statusColors[statusClass] || '#888';
+                        var details = [];
+                        if (item.mode) details.push('Mode: ' + item.mode);
+                        if (item.players) details.push('Players: ' + item.players);
+                        if (item.squad_owner) details.push('Owner: ' + item.squad_owner);
+                        if (item.time_playing) details.push('Time: ' + item.time_playing);
+                        html += '<tr>' +
+                            '<td><strong>' + item.uid + '</strong></td>' +
+                            '<td><span style="color:' + color + ';font-weight:600;">' + status + '</span></td>' +
+                            '<td>' + (item.mode || '—') + '</td>' +
+                            '<td style="font-size:11px;color:rgba(255,255,255,0.5);font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;">' + (details.join(' | ') || '—') + '</td>' +
+                        '</tr>';
+                    });
+                    body.innerHTML = html;
+                    showToast('Checked ' + data.results.length + ' targets', 'success');
+                })
+                .catch(function(err) {
+                    body.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#ff4444;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;">Error: ' + err.message + '</td></tr>';
+                });
+        };
+
+        // ===== ADD TARGET =====
+        document.getElementById('addBtn').onclick = function() {
+            var uid = document.getElementById('addUid').value.trim();
+            if (!uid) { showToast('Please enter a UID', 'error'); return; }
+            if (!/^\d+$/.test(uid)) { showToast('Invalid UID format', 'error'); return; }
+
+            fetch('/add?uid=' + encodeURIComponent(uid))
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.error) showToast(data.error, 'error');
+                    else {
+                        showToast(data.status, 'success');
+                        document.getElementById('addUid').value = '';
+                        fetchStatus();
+                    }
+                })
+                .catch(function() { showToast('Server error', 'error'); });
+        };
+
+        // ===== REMOVE TARGET =====
+        document.getElementById('removeBtn').onclick = function() {
+            var uid = document.getElementById('removeUid').value.trim();
+            if (!uid) { showToast('Please enter a UID', 'error'); return; }
+            if (!/^\d+$/.test(uid)) { showToast('Invalid UID format', 'error'); return; }
+
+            fetch('/remove?uid=' + encodeURIComponent(uid))
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.error) showToast(data.error, 'error');
+                    else {
+                        showToast(data.status, 'warning');
+                        document.getElementById('removeUid').value = '';
+                        fetchStatus();
+                    }
+                })
+                .catch(function() { showToast('Server error', 'error'); });
+        };
+
+        // ===== CONTROLS =====
+        document.getElementById('startSpamBtn').onclick = function() {
+            fetch('/api/spam/start', { method: 'POST' })
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.error) showToast(data.error, 'error');
+                    else { showToast(data.status, 'success'); fetchStatus(); }
+                })
+                .catch(function() { showToast('Server error', 'error'); });
+        };
+
+        document.getElementById('stopSpamBtn').onclick = function() {
+            fetch('/api/spam/stop', { method: 'POST' })
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data.error) showToast(data.error, 'error');
+                    else { showToast(data.status, 'warning'); fetchStatus(); }
+                })
+                .catch(function() { showToast('Server error', 'error'); });
+        };
+
+        document.getElementById('resetTargetsBtn').onclick = function() {
+            showToast('Reloading targets...', 'info');
+            fetchStatus();
+            setTimeout(function() { showToast('Targets reloaded', 'success'); }, 1000);
+        };
+
+        // ===== ENTER KEY SUPPORT =====
+        document.getElementById('checkUid').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') document.getElementById('checkStatusBtn').click();
+        });
+        document.getElementById('addUid').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') document.getElementById('addBtn').click();
+        });
+        document.getElementById('removeUid').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') document.getElementById('removeBtn').click();
+        });
+        document.getElementById('addAccountUid').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') document.getElementById('addAccountBtn').click();
+        });
+
+        // ===== INIT =====
+        loadAccounts();
+        fetchStatus();
+        setInterval(fetchStatus, 3000);
+
+        setInterval(function() {
+            document.getElementById('refreshStatusBtn').click();
+        }, 30000);
+
+        setTimeout(function() {
+            showToast('MAFU FF Tool Ready!', 'success');
+        }, 1500);
+    </script>
+
+</body>
+</html>
