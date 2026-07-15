@@ -1004,7 +1004,7 @@
 
     </div>
 
-    <script>
+        <script>
         // ===== PARTICLES =====
         function createParticles() {
             const container = document.getElementById('particles');
@@ -1025,7 +1025,7 @@
 
         // ===== UPTIME =====
         let startTime = Date.now();
-        setInterval(() => {
+        setInterval(function() {
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
             const hours = String(Math.floor(elapsed / 3600)).padStart(2, '0');
             const minutes = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
@@ -1080,7 +1080,7 @@
         // Cache for player info
         const playerCache = {};
 
-        async function fetch𝐏𝐥𝐚𝐲𝐞𝐫Info(uid) {
+        async function fetchPlayerInfo(uid) {
             if (playerCache[uid]) {
                 return playerCache[uid];
             }
@@ -1089,8 +1089,6 @@
                 if (!response.ok) throw new Error('API Error: ' + response.status);
                 const data = await response.json();
 
-                // New API structure: info-api-green-theta.vercel.app/info?uid=
-                // Fields: AccountInfo.AccountAvatarId, AccountInfo.AccountName, AccountInfo.AccountLevel
                 var accountInfo = data.AccountInfo || {};
                 var socialInfo = data.socialInfo || {};
 
@@ -1098,25 +1096,21 @@
                 var level = '?';
                 var avatarId = null;
 
-                // Extract name from AccountInfo
                 if (accountInfo.AccountName) name = accountInfo.AccountName;
                 else if (accountInfo.nickname) name = accountInfo.nickname;
                 else if (socialInfo.signature) name = socialInfo.signature;
 
-                // Extract level from AccountInfo
                 if (accountInfo.AccountLevel !== undefined && accountInfo.AccountLevel !== null) {
                     level = accountInfo.AccountLevel;
                 } else if (accountInfo.level !== undefined && accountInfo.level !== null) {
                     level = accountInfo.level;
                 }
 
-                // Extract avatar ID from AccountInfo
                 if (accountInfo.AccountAvatarId) avatarId = accountInfo.AccountAvatarId;
                 else if (accountInfo.headPic) avatarId = accountInfo.headPic;
                 else if (accountInfo.headpic) avatarId = accountInfo.headpic;
                 else if (accountInfo.avatarId) avatarId = accountInfo.avatarId;
 
-                // Build avatar URL
                 var avatarUrl = null;
                 if (avatarId) {
                     avatarUrl = AVATAR_CDN + avatarId + '.png';
@@ -1136,7 +1130,7 @@
                 console.error('Error fetching player info for', uid, error);
                 var fallback = {
                     uid: uid,
-                    name: '𝐏𝐥𝐚𝐲𝐞𝐫 ' + uid.slice(-4),
+                    name: 'Player ' + uid.slice(-4),
                     level: '?',
                     avatarId: null,
                     avatarUrl: 'https://ui-avatars.com/api/?name=' + uid.slice(-4) + '&background=667eea&color=fff&size=128'
@@ -1147,26 +1141,26 @@
         }
 
         // ===== ACCOUNT MANAGER =====
-        var 𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬 = [];
+        var accounts = [];
 
         function loadAccounts() {
             var saved = localStorage.getItem('exuAccounts');
             if (saved) {
                 try {
-                    𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬 = JSON.parse(saved);
+                    accounts = JSON.parse(saved);
                     renderAccounts();
                 } catch (e) {
-                    𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬 = [];
+                    accounts = [];
                 }
             }
         }
 
         function saveAccounts() {
-            localStorage.setItem('exuAccounts', JSON.stringify(𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬));
+            localStorage.setItem('exuAccounts', JSON.stringify(accounts));
         }
 
         async function fetchAccountInfo(uid) {
-            var info = await fetch𝐏𝐥𝐚𝐲𝐞𝐫Info(uid);
+            var info = await fetchPlayerInfo(uid);
             return {
                 uid: uid,
                 name: info.name,
@@ -1178,18 +1172,18 @@
         function renderAccounts() {
             var grid = document.getElementById('accountGrid');
             var count = document.getElementById('accountCount');
-            count.textContent = 𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬.length;
+            count.textContent = accounts.length;
 
-            if (𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬.length === 0) {
-                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,0.25);padding:14px;font-size:12px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;font-weight:500;"><i class="fas fa-users"></i> 𝐍𝐨 𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬 𝐚𝐝𝐝𝐞𝐝 𝐲𝐞𝐭. 𝐀𝐝𝐝 𝐚 𝐔𝐈𝐃 𝐚𝐛𝐨𝐯𝐞.</div>';
+            if (accounts.length === 0) {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,0.25);padding:14px;font-size:12px;font-family:'Hind Siliguri','Poppins',sans-serif;font-weight:500;"><i class="fas fa-users"></i> No accounts added yet. Add a UID above.</div>';
                 return;
             }
 
-            grid.innerHTML = 𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬.map(function(acc, index) {
+            grid.innerHTML = accounts.map(function(acc, index) {
                 return '<div class="account-grid-item">' +
                     '<div class="account-avatar-wrap">' +
-                        '<img class="mini-avatar" src="' + acc.avatar + '" alt="' + acc.name + '\'s avatar" ' +
-                             'onerror="this.src=\'https://ui-avatars.com/api/?name=' + encodeURIComponent(acc.name) + '&background=667eea&color=fff&size=128\'">' +
+                        '<img class="mini-avatar" src="' + acc.avatar + '" alt="' + acc.name + ''s avatar" ' +
+                             'onerror="this.src='https://ui-avatars.com/api/?name=' + encodeURIComponent(acc.name) + '&background=667eea&color=fff&size=128'">' +
                     '</div>' +
                     '<div class="acc-details">' +
                         '<div class="acc-name">' + acc.name + '</div>' +
@@ -1204,11 +1198,11 @@
         }
 
         function removeAccount(index) {
-            if (confirm('Remove account ' + 𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬[index].name + '?')) {
-                𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬.splice(index, 1);
+            if (confirm('Remove account ' + accounts[index].name + '?')) {
+                accounts.splice(index, 1);
                 saveAccounts();
                 renderAccounts();
-                showToast('𝐀𝐜𝐜𝐨𝐮𝐧𝐭 𝐫𝐞𝐦𝐨𝐯𝐞𝐝', 'warning');
+                showToast('Account removed', 'warning');
             }
         }
 
@@ -1217,31 +1211,31 @@
             var uid = input.value.trim();
             var msg = document.getElementById('accountMessage');
 
-            if (!uid) { showToast('𝐏𝐥𝐞𝐚𝐬𝐞 𝐞𝐧𝐭𝐞𝐫 𝐚 𝐔𝐈𝐃', 'error'); return; }
-            if (!/^\d+$/.test(uid)) { showToast('𝐈𝐧𝐯𝐚𝐥𝐢𝐝 𝐔𝐈𝐃 𝐟𝐨𝐫𝐦𝐚𝐭', 'error'); return; }
+            if (!uid) { showToast('Please enter a UID', 'error'); return; }
+            if (!/^\d+$/.test(uid)) { showToast('Invalid UID format', 'error'); return; }
 
             var exists = false;
-            for (var i = 0; i < 𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬.length; i++) {
-                if (𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬[i].uid === uid) { exists = true; break; }
+            for (var i = 0; i < accounts.length; i++) {
+                if (accounts[i].uid === uid) { exists = true; break; }
             }
             if (exists) {
-                showToast('𝐀𝐜𝐜𝐨𝐮𝐧𝐭 𝐚𝐥𝐫𝐞𝐚𝐝𝐲 𝐚𝐝𝐝𝐞𝐝', 'warning');
+                showToast('Account already added', 'warning');
                 return;
             }
 
             msg.className = 'message info';
-            msg.textContent = '𝐅𝐞𝐭𝐜𝐡𝐢𝐧𝐠 𝐚𝐜𝐜𝐨𝐮𝐧𝐭 𝐢𝐧𝐟𝐨...';
+            msg.textContent = 'Fetching account info...';
             msg.style.display = 'block';
 
             try {
                 var acc = await fetchAccountInfo(uid);
-                𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬.push(acc);
+                accounts.push(acc);
                 saveAccounts();
                 renderAccounts();
                 msg.className = 'message success';
-                msg.textContent = '𝐀𝐝𝐝𝐞𝐝 ' + acc.name + ' (' + acc.uid + ')';
+                msg.textContent = 'Added ' + acc.name + ' (' + acc.uid + ')';
                 input.value = '';
-                showToast('𝐀𝐝𝐝𝐞𝐝 ' + acc.name, 'success');
+                showToast('Added ' + acc.name, 'success');
             } catch (e) {
                 msg.className = 'message error';
                 msg.textContent = 'Error: ' + e.message;
@@ -1255,14 +1249,14 @@
         async function renderActiveTargets(targets) {
             var container = document.getElementById('activeTargets');
             if (!targets || targets.length === 0) {
-                container.innerHTML = '<span style="color:rgba(255,255,255,0.25);font-size:12px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;">𝐍𝐨 𝐚𝐜𝐭𝐢𝐯𝐞 𝐭𝐚𝐫𝐠𝐞𝐭𝐬</span>';
+                container.innerHTML = '<span style="color:rgba(255,255,255,0.25);font-size:12px;font-family:'Hind Siliguri','Poppins',sans-serif;">No active targets</span>';
                 return;
             }
 
             container.innerHTML = '<div style="color:rgba(255,255,255,0.35);font-size:12px;padding:10px;"><i class="fas fa-spinner fa-spin"></i> Loading targets...</div>';
 
             var targetInfos = await Promise.all(
-                targets.map(function(uid) { return fetch𝐏𝐥𝐚𝐲𝐞𝐫Info(uid); })
+                targets.map(function(uid) { return fetchPlayerInfo(uid); })
             );
 
             container.innerHTML = targetInfos.map(function(info) {
@@ -1270,7 +1264,7 @@
                 return '<div class="target-avatar-item" title="' + info.name + ' (' + info.uid + ') - Lv.' + info.level + '">' +
                     '<img src="' + avatarSrc + '" ' +
                          'alt="' + info.name + '" ' +
-                         'onerror="this.src=\'https://ui-avatars.com/api/?name=' + info.uid.slice(-4) + '&background=667eea&color=fff&size=128\'">' +
+                         'onerror="this.src='https://ui-avatars.com/api/?name=' + info.uid.slice(-4) + '&background=667eea&color=fff&size=128'">' +
                     '<span class="t-name">' + info.name + '</span>' +
                     '<span class="t-lvl">Lv.' + info.level + '</span>' +
                     '<span class="t-uid">' + info.uid + '</span>' +
@@ -1282,17 +1276,20 @@
         var spamCount = 0;
         var squadCount = 0;
 
-        function fetch𝐒𝐭𝐚𝐭𝐮𝐬() {
+        function fetchStatus() {
             fetch('/api/status')
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
-                    document.getElementById('botsOnline').textContent = data.connected_𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬 || 0;
+                    var backendBots = data.connected_accounts || 0;
+                    var localAccounts = accounts.length;
+                    var totalBots = backendBots > 0 ? backendBots : localAccounts;
+                    document.getElementById('botsOnline').textContent = totalBots;
                     document.getElementById('targetCount').textContent = (data.all_targets && data.all_targets.length) || 0;
-                    document.getElementById('botCountDisplay').textContent = data.connected_𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬 || 0;
+                    document.getElementById('botCountDisplay').textContent = totalBots;
 
-                    var statusText = data.spam_running ? '𝐑𝐔𝐍𝐍𝐈𝐍𝐆' : '𝐒𝐓𝐎𝐏𝐏𝐄𝐃';
-                    document.getElementById('spam𝐒𝐭𝐚𝐭𝐮𝐬').textContent = statusText;
-                    document.getElementById('spam𝐒𝐭𝐚𝐭𝐮𝐬').style.color = data.spam_running ? '#00ff88' : '#ff6b6b';
+                    var statusText = data.spam_running ? 'RUNNING' : 'STOPPED';
+                    document.getElementById('spamStatus').textContent = statusText;
+                    document.getElementById('spamStatus').style.color = data.spam_running ? '#00ff88' : '#ff6b6b';
 
                     if (data.spam_running) {
                         spamCount += Math.floor(Math.random() * 3) + 1;
@@ -1305,86 +1302,90 @@
                     }
 
                     var accList = document.getElementById('accountList');
-                    if (data.𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬 && data.𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬.length) {
-                        accList.innerHTML = data.𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬.map(function(acc) {
+                    if (data.accounts && data.accounts.length) {
+                        accList.innerHTML = data.accounts.map(function(acc) {
                             return '<div class="account-item"><span class="status-dot"></span> ' + acc + '</div>';
                         }).join('');
+                    } else if (accounts.length > 0) {
+                        accList.innerHTML = accounts.map(function(acc) {
+                            return '<div class="account-item"><span class="status-dot"></span> ' + acc.name + ' (' + acc.uid + ')</div>';
+                        }).join('');
                     } else {
-                        accList.innerHTML = '<div class="account-item" style="color:rgba(255,255,255,0.25);">𝐍𝐨 𝐛𝐨𝐭𝐬 𝐨𝐧𝐥𝐢𝐧𝐞</div>';
+                        accList.innerHTML = '<div class="account-item" style="color:rgba(255,255,255,0.25);">No bots online</div>';
                     }
 
                     renderActiveTargets(data.all_targets || []);
 
-                    document.getElementById('bot𝐒𝐭𝐚𝐭𝐮𝐬').textContent = data.connected_𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬 > 0 ? '𝐎𝐍𝐋𝐈𝐍𝐄' : '𝐎𝐅𝐅𝐋𝐈𝐍𝐄';
-                    document.getElementById('bot𝐒𝐭𝐚𝐭𝐮𝐬').style.color = data.connected_𝐚𝐜𝐜𝐨𝐮𝐧𝐭𝐬 > 0 ? '#00ff88' : '#ff4444';
+                    document.getElementById('botStatus').textContent = data.connected_accounts > 0 ? 'ONLINE' : 'OFFLINE';
+                    document.getElementById('botStatus').style.color = data.connected_accounts > 0 ? '#00ff88' : '#ff4444';
                 })
                 .catch(function(err) {
-                    console.error('𝐒𝐭𝐚𝐭𝐮𝐬 fetch error:', err);
-                    document.getElementById('bot𝐒𝐭𝐚𝐭𝐮𝐬').textContent = '𝐄𝐑𝐑𝐎𝐑';
-                    document.getElementById('bot𝐒𝐭𝐚𝐭𝐮𝐬').style.color = '#ffaa00';
+                    console.error('Status fetch error:', err);
+                    document.getElementById('botStatus').textContent = 'ERROR';
+                    document.getElementById('botStatus').style.color = '#ffaa00';
                 });
         }
 
         // ===== CHECK SINGLE TARGET =====
-        document.getElementById('check𝐒𝐭𝐚𝐭𝐮𝐬Btn').onclick = function() {
+        document.getElementById('checkStatusBtn').onclick = function() {
             var uid = document.getElementById('checkUid').value.trim();
-            if (!uid) { showToast('𝐏𝐥𝐞𝐚𝐬𝐞 𝐞𝐧𝐭𝐞𝐫 𝐚 𝐔𝐈𝐃', 'error'); return; }
-            if (!/^\d+$/.test(uid)) { showToast('𝐈𝐧𝐯𝐚𝐥𝐢𝐝 𝐔𝐈𝐃 𝐟𝐨𝐫𝐦𝐚𝐭', 'error'); return; }
+            if (!uid) { showToast('Please enter a UID', 'error'); return; }
+            if (!/^\d+$/.test(uid)) { showToast('Invalid UID format', 'error'); return; }
 
             var resultDiv = document.getElementById('statusResult');
             resultDiv.style.display = 'block';
-            resultDiv.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><div style="color:rgba(255,255,255,0.4);font-size:13px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;font-weight:500;">𝐂𝐡𝐞𝐜𝐤𝐢𝐧𝐠 𝐬𝐭𝐚𝐭𝐮𝐬...</div></div>';
+            resultDiv.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><div style="color:rgba(255,255,255,0.4);font-size:13px;font-family:'Hind Siliguri','Poppins',sans-serif;font-weight:500;">Checking status...</div></div>';
 
             fetch('/api/status/' + uid)
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     if (data.error) {
-                        resultDiv.innerHTML = '<div style="color:#ff4444;padding:12px;font-size:13px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;font-weight:500;">Error: ' + data.error + '</div>';
+                        resultDiv.innerHTML = '<div style="color:#ff4444;padding:12px;font-size:13px;font-family:'Hind Siliguri','Poppins',sans-serif;font-weight:500;">Error: ' + data.error + '</div>';
                         return;
                     }
                     var status = data.status || 'UNKNOWN';
                     var statusClass = status.toLowerCase().replace(/[^a-z]/g, '');
                     var statusColors = {
-                        𝐨𝐧𝐥𝐢𝐧𝐞: '#00ff88', offline: '#ff4444', ingame: '#ffaa00',
+                        online: '#00ff88', offline: '#ff4444', ingame: '#ffaa00',
                         insquad: '#44aaff', inroom: '#ff66ff', unknown: '#888', error: '#ff4444'
                     };
-                    var html = '<div class="status-result"><div style="display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:13px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;">';
-                    html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">𝐔𝐈𝐃</span><span><strong>' + uid + '</strong></span>';
-                    html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">𝐒𝐭𝐚𝐭𝐮𝐬</span><span style="color:' + (statusColors[statusClass] || '#888') + ';font-weight:600;">' + status + '</span>';
-                    if (data.mode) html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">𝐌𝐨𝐝𝐞</span><span>' + data.mode + '</span>';
-                    if (data.squad_owner) html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">𝐒𝐪𝐮𝐚𝐝 𝐎𝐰𝐧𝐞𝐫</span><span>' + data.squad_owner + '</span>';
-                    if (data.players) html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">𝐏𝐥𝐚𝐲𝐞𝐫𝐬</span><span>' + data.players + '</span>';
-                    if (data.time_playing) html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">𝐓𝐢𝐦𝐞 𝐏𝐥𝐚𝐲𝐢𝐧𝐠</span><span>' + data.time_playing + '</span>';
+                    var html = '<div class="status-result"><div style="display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:13px;font-family:'Hind Siliguri','Poppins',sans-serif;">';
+                    html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">UID</span><span><strong>' + uid + '</strong></span>';
+                    html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">Status</span><span style="color:' + (statusColors[statusClass] || '#888') + ';font-weight:600;">' + status + '</span>';
+                    if (data.mode) html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">Mode</span><span>' + data.mode + '</span>';
+                    if (data.squad_owner) html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">Squad Owner</span><span>' + data.squad_owner + '</span>';
+                    if (data.players) html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">Players</span><span>' + data.players + '</span>';
+                    if (data.time_playing) html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">Time Playing</span><span>' + data.time_playing + '</span>';
                     if (data.room_info) {
-                        html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">𝐑𝐨𝐨𝐦</span><span>' + (data.room_info.room_name || 'N/A') + '</span>';
-                        html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">𝐑𝐨𝐨𝐦 𝐌𝐨𝐝𝐞</span><span>' + (data.room_info.mode || 'N/A') + '</span>';
+                        html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">Room</span><span>' + (data.room_info.room_name || 'N/A') + '</span>';
+                        html += '<span style="color:rgba(255,255,255,0.35);font-weight:500;">Room Mode</span><span>' + (data.room_info.mode || 'N/A') + '</span>';
                     }
                     html += '</div></div>';
                     resultDiv.innerHTML = html;
                 })
                 .catch(function(err) {
-                    resultDiv.innerHTML = '<div style="color:#ff4444;padding:12px;font-size:13px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;font-weight:500;">Error: ' + err.message + '</div>';
+                    resultDiv.innerHTML = '<div style="color:#ff4444;padding:12px;font-size:13px;font-family:'Hind Siliguri','Poppins',sans-serif;font-weight:500;">Error: ' + err.message + '</div>';
                 });
         };
 
         // ===== REFRESH ALL TARGETS =====
-        document.getElementById('refresh𝐒𝐭𝐚𝐭𝐮𝐬Btn').onclick = function() {
-            var body = document.getElementById('target𝐒𝐭𝐚𝐭𝐮𝐬Body');
-            body.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:25px;color:rgba(255,255,255,0.4);font-size:13px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;font-weight:500;"><i class="fas fa-spinner fa-spin"></i> 𝐂𝐡𝐞𝐜𝐤𝐢𝐧𝐠 𝐚𝐥𝐥 𝐭𝐚𝐫𝐠𝐞𝐭𝐬...</td></tr>';
+        document.getElementById('refreshStatusBtn').onclick = function() {
+            var body = document.getElementById('targetStatusBody');
+            body.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:25px;color:rgba(255,255,255,0.4);font-size:13px;font-family:'Hind Siliguri','Poppins',sans-serif;font-weight:500;"><i class="fas fa-spinner fa-spin"></i> Checking all targets...</td></tr>';
 
             fetch('/api/status/all')
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     if (data.error) {
-                        body.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#ff4444;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;">Error: ' + data.error + '</td></tr>';
+                        body.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#ff4444;font-family:'Hind Siliguri','Poppins',sans-serif;">Error: ' + data.error + '</td></tr>';
                         return;
                     }
                     if (!data.results || data.results.length === 0) {
-                        body.innerHTML = '<tr><td colspan="4" style="text-align:center;color:rgba(255,255,255,0.25);padding:20px;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;">𝐍𝐨 𝐭𝐚𝐫𝐠𝐞𝐭𝐬 𝐭𝐨 𝐜𝐡𝐞𝐜𝐤</td></tr>';
+                        body.innerHTML = '<tr><td colspan="4" style="text-align:center;color:rgba(255,255,255,0.25);padding:20px;font-family:'Hind Siliguri','Poppins',sans-serif;">No targets to check</td></tr>';
                         return;
                     }
                     var statusColors = {
-                        𝐨𝐧𝐥𝐢𝐧𝐞: '#00ff88', offline: '#ff4444', ingame: '#ffaa00',
+                        online: '#00ff88', offline: '#ff4444', ingame: '#ffaa00',
                         insquad: '#44aaff', inroom: '#ff66ff', unknown: '#888', error: '#ff4444'
                     };
                     var html = '';
@@ -1393,30 +1394,30 @@
                         var statusClass = status.toLowerCase().replace(/[^a-z]/g, '');
                         var color = statusColors[statusClass] || '#888';
                         var details = [];
-                        if (item.mode) details.push('𝐌𝐨𝐝𝐞: ' + item.mode);
-                        if (item.players) details.push('𝐏𝐥𝐚𝐲𝐞𝐫𝐬: ' + item.players);
+                        if (item.mode) details.push('Mode: ' + item.mode);
+                        if (item.players) details.push('Players: ' + item.players);
                         if (item.squad_owner) details.push('Owner: ' + item.squad_owner);
                         if (item.time_playing) details.push('Time: ' + item.time_playing);
                         html += '<tr>' +
                             '<td><strong>' + item.uid + '</strong></td>' +
                             '<td><span style="color:' + color + ';font-weight:600;">' + status + '</span></td>' +
                             '<td>' + (item.mode || '—') + '</td>' +
-                            '<td style="font-size:11px;color:rgba(255,255,255,0.5);font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;">' + (details.join(' | ') || '—') + '</td>' +
+                            '<td style="font-size:11px;color:rgba(255,255,255,0.5);font-family:'Hind Siliguri','Poppins',sans-serif;">' + (details.join(' | ') || '—') + '</td>' +
                         '</tr>';
                     });
                     body.innerHTML = html;
-                    showToast('𝐂𝐡𝐞𝐜𝐤ed ' + data.results.length + ' targets', 'success');
+                    showToast('Checked ' + data.results.length + ' targets', 'success');
                 })
                 .catch(function(err) {
-                    body.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#ff4444;font-family:\'Hind Siliguri\',\'Poppins\',sans-serif;">Error: ' + err.message + '</td></tr>';
+                    body.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#ff4444;font-family:'Hind Siliguri','Poppins',sans-serif;">Error: ' + err.message + '</td></tr>';
                 });
         };
 
         // ===== ADD TARGET =====
         document.getElementById('addBtn').onclick = function() {
             var uid = document.getElementById('addUid').value.trim();
-            if (!uid) { showToast('𝐏𝐥𝐞𝐚𝐬𝐞 𝐞𝐧𝐭𝐞𝐫 𝐚 𝐔𝐈𝐃', 'error'); return; }
-            if (!/^\d+$/.test(uid)) { showToast('𝐈𝐧𝐯𝐚𝐥𝐢𝐝 𝐔𝐈𝐃 𝐟𝐨𝐫𝐦𝐚𝐭', 'error'); return; }
+            if (!uid) { showToast('Please enter a UID', 'error'); return; }
+            if (!/^\d+$/.test(uid)) { showToast('Invalid UID format', 'error'); return; }
 
             fetch('/add?uid=' + encodeURIComponent(uid))
                 .then(function(res) { return res.json(); })
@@ -1425,17 +1426,17 @@
                     else {
                         showToast(data.status, 'success');
                         document.getElementById('addUid').value = '';
-                        fetch𝐒𝐭𝐚𝐭𝐮𝐬();
+                        fetchStatus();
                     }
                 })
-                .catch(function() { showToast('𝐒𝐞𝐫𝐯𝐞𝐫 𝐞𝐫𝐫𝐨𝐫', 'error'); });
+                .catch(function() { showToast('Server error', 'error'); });
         };
 
         // ===== REMOVE TARGET =====
         document.getElementById('removeBtn').onclick = function() {
             var uid = document.getElementById('removeUid').value.trim();
-            if (!uid) { showToast('𝐏𝐥𝐞𝐚𝐬𝐞 𝐞𝐧𝐭𝐞𝐫 𝐚 𝐔𝐈𝐃', 'error'); return; }
-            if (!/^\d+$/.test(uid)) { showToast('𝐈𝐧𝐯𝐚𝐥𝐢𝐝 𝐔𝐈𝐃 𝐟𝐨𝐫𝐦𝐚𝐭', 'error'); return; }
+            if (!uid) { showToast('Please enter a UID', 'error'); return; }
+            if (!/^\d+$/.test(uid)) { showToast('Invalid UID format', 'error'); return; }
 
             fetch('/remove?uid=' + encodeURIComponent(uid))
                 .then(function(res) { return res.json(); })
@@ -1444,10 +1445,10 @@
                     else {
                         showToast(data.status, 'warning');
                         document.getElementById('removeUid').value = '';
-                        fetch𝐒𝐭𝐚𝐭𝐮𝐬();
+                        fetchStatus();
                     }
                 })
-                .catch(function() { showToast('𝐒𝐞𝐫𝐯𝐞𝐫 𝐞𝐫𝐫𝐨𝐫', 'error'); });
+                .catch(function() { showToast('Server error', 'error'); });
         };
 
         // ===== CONTROLS =====
@@ -1456,9 +1457,9 @@
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     if (data.error) showToast(data.error, 'error');
-                    else { showToast(data.status, 'success'); fetch𝐒𝐭𝐚𝐭𝐮𝐬(); }
+                    else { showToast(data.status, 'success'); fetchStatus(); }
                 })
-                .catch(function() { showToast('𝐒𝐞𝐫𝐯𝐞𝐫 𝐞𝐫𝐫𝐨𝐫', 'error'); });
+                .catch(function() { showToast('Server error', 'error'); });
         };
 
         document.getElementById('stopSpamBtn').onclick = function() {
@@ -1466,20 +1467,20 @@
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     if (data.error) showToast(data.error, 'error');
-                    else { showToast(data.status, 'warning'); fetch𝐒𝐭𝐚𝐭𝐮𝐬(); }
+                    else { showToast(data.status, 'warning'); fetchStatus(); }
                 })
-                .catch(function() { showToast('𝐒𝐞𝐫𝐯𝐞𝐫 𝐞𝐫𝐫𝐨𝐫', 'error'); });
+                .catch(function() { showToast('Server error', 'error'); });
         };
 
         document.getElementById('resetTargetsBtn').onclick = function() {
-            showToast('𝐑𝐞𝐥𝐨𝐚𝐝𝐢𝐧𝐠 𝐭𝐚𝐫𝐠𝐞𝐭𝐬...', 'info');
-            fetch𝐒𝐭𝐚𝐭𝐮𝐬();
-            setTimeout(function() { showToast('𝐓𝐚𝐫𝐠𝐞𝐭𝐬 𝐫𝐞𝐥𝐨𝐚𝐝𝐞𝐝', 'success'); }, 1000);
+            showToast('Reloading targets...', 'info');
+            fetchStatus();
+            setTimeout(function() { showToast('Targets reloaded', 'success'); }, 1000);
         };
 
         // ===== ENTER KEY SUPPORT =====
         document.getElementById('checkUid').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') document.getElementById('check𝐒𝐭𝐚𝐭𝐮𝐬Btn').click();
+            if (e.key === 'Enter') document.getElementById('checkStatusBtn').click();
         });
         document.getElementById('addUid').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') document.getElementById('addBtn').click();
@@ -1493,15 +1494,15 @@
 
         // ===== INIT =====
         loadAccounts();
-        fetch𝐒𝐭𝐚𝐭𝐮𝐬();
-        setInterval(fetch𝐒𝐭𝐚𝐭𝐮𝐬, 3000);
+        fetchStatus();
+        setInterval(fetchStatus, 3000);
 
         setInterval(function() {
-            document.getElementById('refresh𝐒𝐭𝐚𝐭𝐮𝐬Btn').click();
+            document.getElementById('refreshStatusBtn').click();
         }, 30000);
 
         setTimeout(function() {
-            showToast('𝐄𝐗𝐔 𝐂𝐎𝐃𝐄𝐑 𝐓𝐨𝐨𝐥 𝐑𝐞𝐚𝐝𝐲!', 'success');
+            showToast('EXU CODER Tool Ready!', 'success');
         }, 1500);
     </script>
 
