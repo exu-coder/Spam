@@ -193,7 +193,7 @@
             transform: translateY(-2px);
             background: rgba(0,0,0,0.6);
         }
-        .𝐨𝐧𝐥𝐢𝐧𝐞-dot {
+        .online-dot {
             width: 7px; height: 7px;
             border-radius: 50%;
             background: #00ff88;
@@ -676,7 +676,7 @@
             font-weight: 500;
         }
         .status-table tr:hover td { background: rgba(255,255,255,0.03); }
-        .status-𝐨𝐧𝐥𝐢𝐧𝐞 { color: #00ff88; }
+        .status-online { color: #00ff88; }
         .status-offline { color: #ff4444; }
         .status-ingame { color: #ffaa00; }
         .status-insquad { color: #44aaff; }
@@ -816,11 +816,11 @@
                 <div class="header-stats">
                     <div class="stat-chip">
                         <div class="𝐨𝐧𝐥𝐢𝐧𝐞-dot"></div>
-                        <span id="bot𝐒𝐭𝐚𝐭𝐮𝐬">𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐈𝐍𝐆...</span>
+                        <span id="botStatus">𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐈𝐍𝐆...</span>
                     </div>
                     <div class="stat-chip">
                         <i class="fas fa-fire" style="color: #ff6b6b;"></i>
-                        <span id="spam𝐒𝐭𝐚𝐭𝐮𝐬">𝐒𝐓𝐎𝐏𝐏𝐄𝐃</span>
+                        <span id="spamStatus">𝐒𝐓𝐎𝐏𝐏𝐄𝐃</span>
                     </div>
                     <div class="stat-chip">
                         <i class="fas fa-clock"></i>
@@ -908,10 +908,10 @@
                     <label><i class="fas fa-user"></i> 𝐓𝐚𝐫𝐠𝐞𝐭 𝐔𝐈𝐃</label>
                     <input type="text" id="checkUid" placeholder="𝐄𝐧𝐭𝐞𝐫 𝐔𝐈𝐃 𝐭𝐨 𝐜𝐡𝐞𝐜𝐤...">
                 </div>
-                <button class="btn btn-primary" id="check𝐒𝐭𝐚𝐭𝐮𝐬Btn">
+                <button class="btn btn-primary" id="checkStatusBtn">
                     <i class="fas fa-search"></i> 𝐂𝐡𝐞𝐜𝐤
                 </button>
-                <button class="btn btn-success" id="refresh𝐒𝐭𝐚𝐭𝐮𝐬Btn">
+                <button class="btn btn-success" id="refreshStatusBtn">
                     <i class="fas fa-sync-alt"></i> 𝐑𝐞𝐟𝐫𝐞𝐬𝐡 𝐀𝐥𝐥
                 </button>
             </div>
@@ -932,7 +932,7 @@
                     <thead>
                         <tr><th>𝐏𝐥𝐚𝐲𝐞𝐫</th><th>𝐒𝐭𝐚𝐭𝐮𝐬</th><th>𝐌𝐨𝐝𝐞</th><th>𝐃𝐞𝐭𝐚𝐢𝐥𝐬</th></tr>
                     </thead>
-                    <tbody id="target𝐒𝐭𝐚𝐭𝐮𝐬Body">
+                    <tbody id="targetStatusBody">
                         <tr><td colspan="4" style="text-align:center;color:rgba(255,255,255,0.25);padding:20px;font-size:12px;font-family:'Hind Siliguri','Poppins',sans-serif;font-weight:500;">
                             <i class="fas fa-sync-alt fa-spin"></i> 𝐂𝐥𝐢𝐜𝐤 "𝐑𝐞𝐟𝐫𝐞𝐬𝐡 𝐀𝐥𝐥" 𝐭𝐨 𝐜𝐡𝐞𝐜𝐤 𝐬𝐭𝐚𝐭𝐮𝐬
                         </td></tr>
@@ -999,7 +999,7 @@
 
         <footer>
             𝐌𝐚𝐝𝐞 𝐰𝐢𝐭𝐡 <i class="fas fa-heart"></i> 𝐛𝐲 <strong>𝐄𝐗𝐔 𝐂𝐎𝐃𝐄𝐑</strong> &bull; 
-            𝐀𝐮𝐭𝐨 𝐒𝐪𝐮𝐚𝐝 𝐃𝐞𝐭𝐞𝐜𝐭𝐢𝐨𝐧 &bull; 𝟐𝟒/𝟕 𝐔𝐩𝐭𝐢𝐦𝐞 &bull; 𝐯𝟐.𝟎
+            𝐀𝐮𝐭𝐨 𝐒𝐪𝐮𝐚𝐝 𝐃𝐞𝐭𝐞𝐜𝐭𝐢𝐨𝐧 &bull; 𝟐𝟒/𝟕 𝐔𝐩𝐭𝐢𝐦𝐞 &bull; 𝐯𝟐.0
         </footer>
 
     </div>
@@ -1182,7 +1182,7 @@
             grid.innerHTML = accounts.map(function(acc, index) {
                 return '<div class="account-grid-item">' +
                     '<div class="account-avatar-wrap">' +
-                        '<img class="mini-avatar" src="' + acc.avatar + '" alt="' + acc.name + ''s avatar" ' +
+                        '<img class="mini-avatar" src="' + acc.avatar + '" alt="' + acc.name + "\'s avatar" ' +
                              'onerror="this.src='https://ui-avatars.com/api/?name=' + encodeURIComponent(acc.name) + '&background=667eea&color=fff&size=128'">' +
                     '</div>' +
                     '<div class="acc-details">' +
