@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝐍𝐓 𝐀𝐈 𝐙𝐄𝐍 𝐂𝐎𝐃𝐄𝐑 𝐔𝐋𝐓𝐈𝐌𝐀𝐓𝐄 𝟐𝟒/𝟕 𝐒𝐏𝐀𝐌 𝐓𝐎𝐎𝐋</title>
+    <title>𝐄𝐗𝐔 𝐂𝐎𝐃𝐄𝐑 𝐔𝐋𝐓𝐈𝐌𝐀𝐓𝐄 𝟐𝟒/𝟕 𝐒𝐏𝐀𝐌 𝐓𝐎𝐎𝐋</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -804,11 +804,11 @@
             <div class="header-content">
                 <div class="logo">
                     <div class="logo-icon">
-                        <img src="https://raw.githubusercontent.com/exu-coder/Spam/main/static/Logo.png" alt="𝐍𝐓 𝐀𝐈 𝐙𝐄𝐍 𝐂𝐎𝐃𝐄𝐑 𝐋𝐨𝐠𝐨" onerror="this.parentElement.innerHTML='<i class='fas fa-bolt' style='font-size:24px;color:#fff;'></i>'">
+                        <img src="https://raw.githubusercontent.com/exu-coder/Spam/main/static/Logo.png" alt="𝐄𝐗𝐔 𝐂𝐎𝐃𝐄𝐑 𝐋𝐨𝐠𝐨" onerror="this.parentElement.innerHTML='<i class='fas fa-bolt' style='font-size:24px;color:#fff;'></i>'">
                     </div>
                     <div>
                         <h1>
-                            <span class="mafu">𝐍𝐓 𝐀𝐈 𝐙𝐄𝐍</span> <span class="ff">𝐂𝐎𝐃𝐄𝐑</span>
+                            <span class="mafu">𝐄𝐗𝐔</span> <span class="ff">𝐂𝐎𝐃𝐄𝐑</span>
                             <span class="ultimate">𝐔𝐋𝐓𝐈𝐌𝐀𝐓𝐄 𝟐𝟒/𝟕 𝐒𝐏𝐀𝐌 𝐓𝐎𝐎𝐋</span>
                         </h1>
                     </div>
@@ -820,7 +820,7 @@
                     </div>
                     <div class="stat-chip">
                         <i class="fas fa-fire" style="color: #ff6b6b;"></i>
-                        <span id="spamStatus">𝐒𝐓𝐎𝐏𝐏𝐄𝐃</span>
+                        <span id="spamStatus">STOPPED</span>
                     </div>
                     <div class="stat-chip">
                         <i class="fas fa-clock"></i>
@@ -998,7 +998,7 @@
         </div>
 
         <footer>
-            Made with <i class="fas fa-heart"></i> by <strong>𝐍𝐓 𝐀𝐈 𝐙𝐄𝐍 𝐂𝐎𝐃𝐄𝐑</strong> &bull; 
+            Made with <i class="fas fa-heart"></i> by <strong>𝐄𝐗𝐔 𝐂𝐎𝐃𝐄𝐑</strong> &bull; 
             𝐀𝐮𝐭𝐨 𝐒𝐪𝐮𝐚𝐝 𝐃𝐞𝐭𝐞𝐜𝐭𝐢𝐨𝐧 &bull; 𝟐𝟒/𝟕 𝐔𝐩𝐭𝐢𝐦𝐞 &bull; 𝐯𝟐.𝟎
         </footer>
 
@@ -1074,7 +1074,7 @@
         }
 
         // ===== API CONFIG =====
-        const INFO_API_URL = 'https://mafuuuu-info-api.vercel.app/mafu-info?uid=';
+        const INFO_API_URL = 'https://info-api-green-theta.vercel.app/info?uid=';
         const AVATAR_CDN = 'https://cdn.jsdelivr.net/gh/ShahGCreator/icon@main/PNG/';
 
         // Cache for player info
@@ -1089,43 +1089,40 @@
                 if (!response.ok) throw new Error('API Error: ' + response.status);
                 const data = await response.json();
 
-                // The API returns data in data.basicInfo based on the provided response
-                // But it could also be flat - handle both cases
-                var profile = data;
-                if (data.basicInfo) profile = data.basicInfo;
-                else if (data.data && data.data.basicInfo) profile = data.data.basicInfo;
-                else if (data.data) profile = data.data;
+                var accountInfo = data.AccountInfo || {};
+                var socialInfo = data.socialinfo || {};
 
                 var name = 'Unknown';
                 var level = '?';
-                var headpic = null;
+                var avatarId = null;
 
                 // Extract name
-                if (profile.nickname) name = profile.nickname;
-                else if (profile.name) name = profile.name;
-                else if (profile.username) name = profile.username;
+                if (accountInfo.AccountName) name = accountInfo.AccountName;
+                else if (accountInfo.nickname) name = accountInfo.nickname;
 
                 // Extract level
-                if (profile.level !== undefined && profile.level !== null) level = profile.level;
-                else if (profile.lvl !== undefined && profile.lvl !== null) level = profile.lvl;
+                if (accountInfo.AccountLevel !== undefined && accountInfo.AccountLevel !== null) {
+                    level = accountInfo.AccountLevel;
+                } else if (accountInfo.level !== undefined && accountInfo.level !== null) {
+                    level = accountInfo.level;
+                }
 
-                // Extract headpic (avatar ID)
-                if (profile.headPic) headpic = profile.headPic;
-                else if (profile.headpic) headpic = profile.headpic;
-                else if (profile.avatarId) headpic = profile.avatarId;
-                else if (profile.avatar) headpic = profile.avatar;
+                // Extract avatar ID
+                if (accountInfo.AccountAvatarId) avatarId = accountInfo.AccountAvatarId;
+                else if (accountInfo.headPic) avatarId = accountInfo.headPic;
+                else if (accountInfo.avatarId) avatarId = accountInfo.avatarId;
 
                 // Build avatar URL
                 var avatarUrl = null;
-                if (headpic) {
-                    avatarUrl = AVATAR_CDN + headpic + '.png';
+                if (avatarId) {
+                    avatarUrl = AVATAR_CDN + avatarId + '.png';
                 }
 
                 var playerInfo = {
                     uid: uid,
                     name: name,
                     level: level,
-                    headpic: headpic,
+                    avatarId: avatarId,
                     avatarUrl: avatarUrl
                 };
 
@@ -1137,7 +1134,7 @@
                     uid: uid,
                     name: 'Player ' + uid.slice(-4),
                     level: '?',
-                    headpic: null,
+                    avatarId: null,
                     avatarUrl: 'https://ui-avatars.com/api/?name=' + uid.slice(-4) + '&background=667eea&color=fff&size=128'
                 };
                 playerCache[uid] = fallback;
@@ -1500,7 +1497,7 @@
         }, 30000);
 
         setTimeout(function() {
-            showToast(' 𝐂𝐎𝐃𝐄𝐑 Tool Ready!', 'success');
+            showToast('𝐄𝐗𝐔 𝐂𝐎𝐃𝐄𝐑 Tool Ready!', 'success');
         }, 1500);
     </script>
 
