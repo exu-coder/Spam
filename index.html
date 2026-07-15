@@ -1277,7 +1277,7 @@
         var squadCount = 0;
 
         function fetchStatus() {
-            fetch('/api/status')
+            fetch('https://spam-alwm.onrender.com/api/status')
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     var backendBots = data.connected_accounts || 0;
@@ -1323,6 +1323,9 @@
                     console.error('Status fetch error:', err);
                     document.getElementById('botStatus').textContent = 'ERROR';
                     document.getElementById('botStatus').style.color = '#ffaa00';
+                    // Fallback: show local accounts count if backend fails
+                    document.getElementById('botsOnline').textContent = accounts.length;
+                    document.getElementById('botCountDisplay').textContent = accounts.length;
                 });
         }
 
@@ -1336,7 +1339,7 @@
             resultDiv.style.display = 'block';
             resultDiv.innerHTML = '<div class="loading-spinner"><div class="spinner"></div><div style="color:rgba(255,255,255,0.4);font-size:13px;font-family:'Hind Siliguri','Poppins',sans-serif;font-weight:500;">Checking status...</div></div>';
 
-            fetch('/api/status/' + uid)
+            fetch('https://spam-alwm.onrender.com/api/status/' + uid)
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     if (data.error) {
@@ -1373,7 +1376,7 @@
             var body = document.getElementById('targetStatusBody');
             body.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:25px;color:rgba(255,255,255,0.4);font-size:13px;font-family:'Hind Siliguri','Poppins',sans-serif;font-weight:500;"><i class="fas fa-spinner fa-spin"></i> Checking all targets...</td></tr>';
 
-            fetch('/api/status/all')
+            fetch('https://spam-alwm.onrender.com/api/status/all')
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     if (data.error) {
@@ -1419,7 +1422,7 @@
             if (!uid) { showToast('Please enter a UID', 'error'); return; }
             if (!/^\d+$/.test(uid)) { showToast('Invalid UID format', 'error'); return; }
 
-            fetch('/add?uid=' + encodeURIComponent(uid))
+            fetch('https://spam-alwm.onrender.com/add?uid=' + encodeURIComponent(uid))
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     if (data.error) showToast(data.error, 'error');
@@ -1438,7 +1441,7 @@
             if (!uid) { showToast('Please enter a UID', 'error'); return; }
             if (!/^\d+$/.test(uid)) { showToast('Invalid UID format', 'error'); return; }
 
-            fetch('/remove?uid=' + encodeURIComponent(uid))
+            fetch('https://spam-alwm.onrender.com/remove?uid=' + encodeURIComponent(uid))
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     if (data.error) showToast(data.error, 'error');
@@ -1453,7 +1456,7 @@
 
         // ===== CONTROLS =====
         document.getElementById('startSpamBtn').onclick = function() {
-            fetch('/api/spam/start', { method: 'POST' })
+            fetch('https://spam-alwm.onrender.com/api/spam/start', { method: 'POST' })
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     if (data.error) showToast(data.error, 'error');
@@ -1463,7 +1466,7 @@
         };
 
         document.getElementById('stopSpamBtn').onclick = function() {
-            fetch('/api/spam/stop', { method: 'POST' })
+            fetch('https://spam-alwm.onrender.com/api/spam/stop', { method: 'POST' })
                 .then(function(res) { return res.json(); })
                 .then(function(data) {
                     if (data.error) showToast(data.error, 'error');
@@ -1496,6 +1499,17 @@
         loadAccounts();
         fetchStatus();
         setInterval(fetchStatus, 3000);
+
+        // If still connecting after 5s, show offline with local count
+        setTimeout(function() {
+            var botStatus = document.getElementById('botStatus').textContent;
+            if (botStatus === 'CONNECTING...') {
+                document.getElementById('botStatus').textContent = 'OFFLINE';
+                document.getElementById('botStatus').style.color = '#ff4444';
+                document.getElementById('botsOnline').textContent = accounts.length;
+                document.getElementById('botCountDisplay').textContent = accounts.length;
+            }
+        }, 5000);
 
         setInterval(function() {
             document.getElementById('refreshStatusBtn').click();
