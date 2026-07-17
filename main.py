@@ -334,11 +334,11 @@ def build_major_login_payload(open_id, access_token):
         major_login.external_storage_total = 128512
         major_login.external_storage_available = random.randint(38000, 52000)
         major_login.internal_storage_total = 110731
-        major_login.internal_storage_available = random.randint(18000, 32000)
-        major_login.game_disk_storage_total = 26628
-        major_login.game_disk_storage_available = random.randint(18000, 25000)
-        major_login.external_sdcard_total_storage = 119234
-        major_login.external_sdcard_avail_storage = random.randint(25000, 60000)
+        major_login.internal_storage_available = random.randint(19000, 33000)
+        major_login.game_disk_storage_total = 27628
+        major_login.game_disk_storage_available = random.randint(19000, 26000)
+        major_login.external_sdcard_total_storage = 129234
+        major_login.external_sdcard_avail_storage = random.randint(25000, 61000)
         
         # Library
         major_login.library_path = f"/data/app/~~{random.choice(['abc123', 'def456', 'ghi789', 'jkl012', 'mno345'])}/base.apk"
@@ -346,15 +346,15 @@ def build_major_login_payload(open_id, access_token):
         major_login.client_using_version = "7428b253defc164018c604a1ebbfebdf"
         
         # Features
-        major_login.supported_astc_bitset = 16383
+        major_login.supported_astc_bitset = 17383
         major_login.analytics_detail = b"FwQVTgUPX1UaUllDDwcWCRBpWAUOUgsvA1snWlBaO1kFYg=="
-        major_login.loading_time = random.randint(9000, 18000)
+        major_login.loading_time = random.randint(9100, 19000)
         major_login.release_channel = "android"
         major_login.channel_type = 3
         major_login.reg_avatar = 1
         major_login.if_push = 1
         major_login.is_vpn = 0
-        major_login.android_engine_init_flag = 110009
+        major_login.android_engine_init_flag = 120009
         
         return major_login.SerializeToString()
     except Exception as e:
