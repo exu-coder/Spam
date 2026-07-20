@@ -202,7 +202,7 @@ def request_join_with_badge(target_uid, badge_value, key, iv, region="IND"):
         2: {
             1: int(target_uid), 2: region.upper(), 3: 1, 4: 1,
             5: bytes([1, 7, 9, 10, 11, 18, 25, 26, 32]),
-            6: "TG:[C][B][FF0000] @MAFU", 7: 330, 8: 1000, 10: region.upper(),
+            6: "Join Fast!", 7: 330, 8: 1000, 10: region.upper(),
             11: bytes([49, 97, 99, 52, 98, 56, 48, 101, 99, 102, 48, 52, 55, 56, 97, 52, 52, 50, 48, 51, 98, 102, 56, 102, 97, 99, 54, 49, 50, 48, 102, 53]),
             12: 1, 13: int(target_uid),
             14: {1: 2203434355, 2: 8, 3: b"\x10\x15\x08\x0A\x0B\x13\x0C\x0F\x11\x04\x07\x02\x03\x0D\x0E\x12\x01\x05\x06"},
@@ -234,27 +234,46 @@ def SEnd_InV(num, target_uid, key, iv, region):
     p_type = '0514' if region.lower() == 'ind' else '0519'
     return GeneRaTePk(CrEaTe_ProTo(fields).hex(), p_type, key, iv)
 
-def SEnd_InV_Full(num, target_uid, key, iv, region):
+def SEnd_InV_Full(num, target_uid, key, iv, region, badge_value=32768):
+    avatar_ids = [
+        902000028, 902000011, 902000015, 902000013, 902000086,
+        902000154, 902000127, 902000207, 902000246, 902000305,
+        902000338, 902047016, 902049015, 902052006, 902000100,
+        902000204, 902052006, 902037031, 902042011, 902053016,
+        902051013, 902053018  
+    ]
+    avatar = random.choice(avatar_ids)
+    
     fields = {
         1: 2,
         2: {
             1: int(target_uid),
             2: region.upper(),
             4: num,
+            5: bytes([1, 7, 9, 10, 11, 18, 25, 26, 32]),
             6: "Join Fast!",
             7: 330,
             8: 1000,
             9: 100,
+            11: bytes([49,97,99,52,98,56,48,101,99,102,48,52,55,56,97,52,52,50,48,51,98,102,56,102,97,99,54,49,50,48,102,53]),
+            12: 1,
             13: int(target_uid),
-            17: {2: 159, 4: "y[WW", 6: 11, 8: "1.120.2", 9: 3, 10: 1},
-            18: 306,
-            19: 18,
-            24: random.randint(902000001, 902050006),
+            14: {1: 2203434355, 2: 8, 3: b"\x10\x15\x08\x0A\x0B\x13\x0C\x0F\x11\x04\x07\x02\x03\x0D\x0E\x12\x01\x05\x06"},
+            16: 1,
+            17: 1,
+            18: 312,
+            19: 46,
+            23: bytes([16, 1, 24, 1]),
+            24: avatar,
+            26: {},
             27: {1: 11, 2: 12999994075, 3: 9999},
-            31: {1: 1, 2: 32768},
-            32: 32768,
-            34: {1: int(target_uid), 2: 8, 3: b"\x10\x15\x08\x0A\x0B\x13\x0C\x0F\x11\x04\x07\x02\x03\x0D\x0E\x12\x01\x05\x06"}
-        }
+            28: {},
+            31: {1: 1, 2: int(badge_value)},
+            32: int(badge_value),
+            34: {1: int(target_uid), 2: 8, 3: b"\x0F\x06\x15\x08\x0A\x0B\x13\x0C\x11\x04\x0E\x14\x07\x02\x01\x05\x10\x03\x0D\x12"}
+        },
+        10: "en",
+        13: {2: 1, 3: 1}
     }
     p_type = '0514' if region.lower() == 'ind' else '0519'
     return GeneRaTePk(CrEaTe_ProTo(fields).hex(), p_type, key, iv)
@@ -264,41 +283,28 @@ def ExiT(key, iv):
     return GeneRaTePk(CrEaTe_ProTo(fields).hex(), '0515', key, iv)
 
 # =============================================================================
-# UPDATED MAJOR LOGIN FUNCTIONS (NEW - MORE REALISTIC)
+# UPDATED MAJOR LOGIN FUNCTIONS
 # =============================================================================
 
 async def encrypted_proto(proto_bytes):
-    """Encrypt proto bytes with AES-CBC"""
     cipher = AES.new(Config.AES_KEY, AES.MODE_CBC, Config.AES_IV)
     return cipher.encrypt(pad(proto_bytes, AES.block_size))
 
 def build_major_login_payload(open_id, access_token):
-    """
-    Build MajorLogin protobuf with realistic device parameters
-    This is the UPDATED version with better device spoofing
-    """
     try:
         major_login = MajoRLoGinrEq_pb2.MajorLogin()
-        
-        # Basic info
         major_login.event_time = str(datetime.now())[:-7]
         major_login.game_name = "free fire"
         major_login.platform_id = 2
         major_login.client_version = "1.126.2"
         major_login.client_version_code = "2024010012"
-        
-        # Device info - Android 11
         major_login.system_software = "Android OS 11 / API-30 (RQ3A.210805.001)"
         major_login.system_hardware = "Handheld"
         major_login.device_type = "Handheld"
-        
-        # Network info
         major_login.telecom_operator = "Verizon"
         major_login.network_operator_a = "Verizon"
         major_login.network_type = "WIFI"
         major_login.network_type_a = "WIFI"
-        
-        # Screen & GPU
         major_login.screen_width = 1080
         major_login.screen_height = 2400
         major_login.screen_dpi = "440"
@@ -309,13 +315,9 @@ def build_major_login_payload(open_id, access_token):
         major_login.gpu_renderer = "Adreno (TM) 650"
         major_login.gpu_version = "OpenGL ES 3.2 V@1.50"
         major_login.graphics_api = "OpenGLES3"
-        
-        # Device ID
         major_login.unique_device_id = f"Google|{random.choice(['34a7dcdf-a7d5-4cb6-8d7e-3b0e448a0c57', '5b8f2c9a-1d3e-4f5a-8b7c-9d2e1f3a4b5c', '7c3a9f2e-4d5a-6b7c-8d9e-0f1a2b3c4d5e'])}"
         major_login.client_ip = ""
         major_login.language = "en"
-        
-        # Auth
         major_login.open_id = open_id
         major_login.open_id_type = "4"
         major_login.login_open_id_type = 4
@@ -324,13 +326,9 @@ def build_major_login_payload(open_id, access_token):
         major_login.platform_sdk_id = 2
         major_login.origin_platform_type = "4"
         major_login.primary_platform_type = "4"
-        
-        # Memory available
         memory_available = major_login.memory_available
         memory_available.version = 55
         memory_available.hidden_value = 81
-        
-        # Storage (randomized for realism)
         major_login.external_storage_total = 128512
         major_login.external_storage_available = random.randint(38000, 52000)
         major_login.internal_storage_total = 110731
@@ -339,13 +337,9 @@ def build_major_login_payload(open_id, access_token):
         major_login.game_disk_storage_available = random.randint(19000, 26000)
         major_login.external_sdcard_total_storage = 129234
         major_login.external_sdcard_avail_storage = random.randint(25000, 61000)
-        
-        # Library
         major_login.library_path = f"/data/app/~~{random.choice(['abc123', 'def456', 'ghi789', 'jkl012', 'mno345'])}/base.apk"
         major_login.library_token = f"{random.choice(['5b892aaabd688e571f688053118a162b', 'a1b2c3d4e5f67890', '1234567890abcdef'])}|base.apk"
         major_login.client_using_version = "7428b253defc164018c604a1ebbfebdf"
-        
-        # Features
         major_login.supported_astc_bitset = 17383
         major_login.analytics_detail = b"FwQVTgUPX1UaUllDDwcWCRBpWAUOUgsvA1snWlBaO1kFYg=="
         major_login.loading_time = random.randint(9100, 19000)
@@ -355,14 +349,12 @@ def build_major_login_payload(open_id, access_token):
         major_login.if_push = 1
         major_login.is_vpn = 0
         major_login.android_engine_init_flag = 120009
-        
         return major_login.SerializeToString()
     except Exception as e:
         print(f"[!] Build MajorLogin payload error: {e}")
         return None
 
 def build_get_login_data_payload(jwt_token, access_token):
-    """Build GetLoginData payload"""
     try:
         token_payload_base64 = jwt_token.split('.')[1]
         token_payload_base64 += '=' * ((4 - len(token_payload_base64) % 4) % 4)
@@ -370,7 +362,6 @@ def build_get_login_data_payload(jwt_token, access_token):
         payload_dict = json.loads(decoded_payload)
         external_id = payload_dict['external_id']
         signature_md5 = payload_dict['signature_md5']
-        
         major_login = MajoRLoGinrEq_pb2.MajorLogin()
         major_login.event_time = str(datetime.now())[:-7]
         major_login.game_name = "free fire"
@@ -405,11 +396,9 @@ def build_get_login_data_payload(jwt_token, access_token):
         major_login.platform_sdk_id = 2
         major_login.origin_platform_type = "4"
         major_login.primary_platform_type = "4"
-        
         memory_available = major_login.memory_available
         memory_available.version = 55
         memory_available.hidden_value = 81
-        
         major_login.external_storage_total = 128512
         major_login.external_storage_available = random.randint(38000, 52000)
         major_login.internal_storage_total = 110731
@@ -430,7 +419,6 @@ def build_get_login_data_payload(jwt_token, access_token):
         major_login.if_push = 1
         major_login.is_vpn = 0
         major_login.android_engine_init_flag = 110009
-        
         proto_bytes = major_login.SerializeToString()
         cipher = AES.new(Config.AES_KEY, AES.MODE_CBC, Config.AES_IV)
         encrypted = cipher.encrypt(pad(proto_bytes, AES.block_size))
@@ -440,7 +428,6 @@ def build_get_login_data_payload(jwt_token, access_token):
         return None
 
 def parse_safe_major_login_response(response_bytes):
-    """Parse MajorLoginRes protobuf"""
     try:
         res = MajoRLoGinrEs_pb2.MajorLoginRes()
         res.ParseFromString(response_bytes)
@@ -458,15 +445,11 @@ def parse_safe_major_login_response(response_bytes):
         return None
 
 def major_login_safe(access_token, open_id):
-    """Perform MajorLogin with updated realistic parameters"""
     proto_bytes = build_major_login_payload(open_id, access_token)
     if not proto_bytes:
         return None
-    
-    # Encrypt the proto
     cipher = AES.new(Config.AES_KEY, AES.MODE_CBC, Config.AES_IV)
     encrypted_payload = cipher.encrypt(pad(proto_bytes, AES.block_size))
-    
     headers = {
         'X-Unity-Version': '2018.4.11f1',
         'ReleaseVersion': 'OB54',
@@ -492,7 +475,6 @@ def major_login_safe(access_token, open_id):
         return None
 
 def get_login_data_safe(jwt_token, access_token, base_url):
-    """GetLoginData with updated parameters"""
     payload = build_get_login_data_payload(jwt_token, access_token)
     if not payload:
         return False
@@ -518,8 +500,6 @@ def get_login_data_safe(jwt_token, access_token, base_url):
         return False
 
 def activate_account(uid, password):
-    """Activate account using safe method with updated parameters"""
-    # Step 1: Guest token
     guest_url = "https://ffmconnect.live.gop.garenanow.com/oauth/guest/token/grant"
     guest_headers = {
         "Host": "100067.connect.garena.com",
@@ -550,23 +530,16 @@ def activate_account(uid, password):
     except Exception as e:
         print(f"[!] Guest token error for {uid}: {e}")
         return False
-    
-    # Step 2: MajorLogin with updated parameters
     major_response = major_login_safe(access_token, open_id)
     if not major_response:
         print(f"[!] MajorLogin failed for {uid}")
         return False
-    
-    # Step 3: Parse response
     login_data = parse_safe_major_login_response(major_response)
     if not login_data:
         print(f"[!] Parse MajorLogin failed for {uid}")
         return False
-    
     jwt_token = login_data['token']
     base_url = login_data['url']
-    
-    # Step 4: GetLoginData
     success = get_login_data_safe(jwt_token, access_token, base_url)
     if success:
         print(f"[+] Account {uid} activated successfully!")
@@ -597,7 +570,7 @@ def xAuThSTarTuP(account_uid, token, timestamp, key, iv):
     return f"0115{headers}{uid_hex}{encrypted_timestamp}00000{pkt_len_hex}{encrypted_packet}"
 
 # =============================================================================
-# FF_CLIENT CLASS (UPDATED)
+# FF_CLIENT CLASS (RESTORED WORKING RHYTHM)
 # =============================================================================
 
 class FF_Client:
@@ -616,12 +589,9 @@ class FF_Client:
         threading.Thread(target=self._spam_loop, daemon=True).start()
 
     def _full_auth(self):
-        """Authenticate using safe activation method with updated parameters"""
         if not activate_account(self.uid, self.password):
             return False
-        
         try:
-            # Step 1: Get guest token
             guest_url = "https://ffmconnect.live.gop.garenanow.com/oauth/guest/token/grant"
             guest_headers = {
                 "Host": "100067.connect.garena.com",
@@ -646,28 +616,21 @@ class FF_Client:
             open_id = gjson.get('open_id')
             if not access_token or not open_id:
                 return False
-            
-            # Step 2: MajorLogin
             major_response = major_login_safe(access_token, open_id)
             if not major_response:
                 return False
-            
             login_data = parse_safe_major_login_response(major_response)
             if not login_data:
                 return False
-            
             self.key = login_data['key']
             self.iv = login_data['iv']
             token = login_data['token']
             timestamp = login_data['timestamp']
             self.account_uid = login_data['account_uid']
             self.region = login_data['region']
-            
-            # Step 3: Get server IP
             payload = build_get_login_data_payload(token, access_token)
             if not payload:
                 return False
-            
             url = f"{login_data['url']}/GetLoginData"
             headers = {
                 'Authorization': f'Bearer {token}',
@@ -679,12 +642,9 @@ class FF_Client:
                 'Connection': 'close',
                 'Accept-Encoding': 'gzip, deflate, br',
             }
-            
             response = requests.post(url, headers=headers, data=payload, verify=False, timeout=15)
             if response.status_code != 200:
                 return False
-            
-            # Parse GetLoginData response
             try:
                 res = PorTs_pb2.GetLoginData()
                 res.ParseFromString(response.content)
@@ -694,11 +654,8 @@ class FF_Client:
             except Exception as e:
                 print(f"[!] Parse GetLoginData error: {e}")
                 return False
-            
-            # Build auth token
             self.auth_token = xAuThSTarTuP(int(self.account_uid), token, int(timestamp), self.key, self.iv)
             return True
-            
         except Exception as e:
             print(f"[!] Full auth error for {self.uid}: {e}")
             return False
@@ -728,8 +685,8 @@ class FF_Client:
 
     def _connect(self):
         if not self._full_auth():
-            print(f"[-] {self.uid} Auth failed. Retrying later...")
-            time.sleep(random.randint(15, 30))
+            print(f"[-] {self.uid} Auth failed. Retrying in 15s...")
+            time.sleep(15)
             self._connect()
             return
         sock = self._connect_online()
@@ -750,59 +707,71 @@ class FF_Client:
             except:
                 pass
         self.running = False
-        time.sleep(random.randint(2, 5))
+        time.sleep(2.5)
         self._connect()
 
+    # ═══════════════════════════════════════════════════════════════════════
+    # RESTORED WORKING send_all_spams — burst-pause rhythm
+    # ═══════════════════════════════════════════════════════════════════════
     def send_all_spams(self, target_id):
         if not self.online_sock or self._need_reconnect:
             self.reconnect()
             if not self.online_sock:
                 return
         try:
-            # Send spam packets with small delays to avoid detection
+            # BURST 1: Open room + spam rooms
             self.online_sock.send(openroom(self.key, self.iv))
-            time.sleep(0.08)
+            time.sleep(0.03)
             
-            for i in range(10):
+            for i in range(4):
                 self.online_sock.send(spmroom(self.key, self.iv, target_id))
-                time.sleep(0.05)
+                time.sleep(0.03)
             
-            for i in range(5):
+            # BURST 2: Room spam messages
+            for i in range(3):
                 room_spam = Room_Spam_Full(target_id, 12345678, f"JOIN FAST! {i+1}", self.key, self.iv)
                 self.online_sock.send(room_spam)
-                time.sleep(0.05)
+                time.sleep(0.03)
             
-            for badge in ["s1", "s2", "s3", "s4", "s5"]:
+            # BURST 3: Badge join requests (premium look)
+            for badge in ["s2", "s3"]:
                 pkt = request_join_with_badge(target_id, BADGE_VALUES[badge], self.key, self.iv, self.region)
                 if pkt:
                     self.online_sock.send(pkt)
-                time.sleep(0.05)
+                time.sleep(0.04)
             
+            # BURST 4: Open squad + invites
             self.online_sock.send(OpEnSq(self.key, self.iv, self.region))
-            time.sleep(0.08)
+            time.sleep(0.03)
             
             c5 = cHSq(5, target_id, self.key, self.iv, self.region)
             self.online_sock.send(c5)
             inv5 = SEnd_InV(5, target_id, self.key, self.iv, self.region)
             self.online_sock.send(inv5)
-            time.sleep(0.05)
+            time.sleep(0.03)
             
-            snd = SEnd_InV_Full(5, target_id, self.key, self.iv, self.region)
+            # PREMIUM ROOM INVITE — ONE with best badge
+            snd = SEnd_InV_Full(5, target_id, self.key, self.iv, self.region, BADGE_VALUES["s2"])
             self.online_sock.send(snd)
-            time.sleep(0.05)
+            time.sleep(0.03)
             
-            for num in [3,4,5,6]:
+            # BURST 5: Final invites
+            for num in [3, 4]:
                 c = cHSq(num, target_id, self.key, self.iv, self.region)
                 self.online_sock.send(c)
                 inv = SEnd_InV(num, target_id, self.key, self.iv, self.region)
                 self.online_sock.send(inv)
-                time.sleep(0.05)
+                time.sleep(0.03)
             
             self.online_sock.send(ExiT(self.key, self.iv))
+            
         except Exception as e:
             print(f"[{self.uid}] Error spamming {target_id}: {e}")
             self._need_reconnect = True
 
+    # ═══════════════════════════════════════════════════════════════════════
+    # RESTORED WORKING _spam_loop — proper pause between bursts
+    # ═══════════════════════════════════════════════════════════════════════
     def _spam_loop(self):
         while self.running:
             try:
@@ -813,7 +782,8 @@ class FF_Client:
                     continue
                 for target in targets:
                     self.send_all_spams(target)
-                    time.sleep(random.uniform(0.3, 0.8))  # Random delay between targets
+                    # CRITICAL PAUSE — server needs time to process burst
+                    time.sleep(random.uniform(1.5, 2.5))
             except Exception as e:
                 print(f"[{self.uid}] Spam loop error: {e}")
                 time.sleep(1)
@@ -842,10 +812,10 @@ def start_all_accounts():
         return
     for uid, pwd in accounts:
         threading.Thread(target=lambda: FF_Client(uid, pwd), daemon=True).start()
-        time.sleep(random.randint(5, 10))  # Random delay between account starts
+        time.sleep(random.randint(3, 6))
 
 # =============================================================================
-# STATUS MONITOR (with fixed squad detection)
+# STATUS MONITOR
 # =============================================================================
 
 _Hr = {
@@ -1096,7 +1066,7 @@ async def _login(status_uid, status_pw, retry=3):
         except Exception as e:
             print(f"[Monitor] Login attempt {attempt+1}/{retry} failed: {e}")
             if attempt < retry - 1:
-                await asyncio.sleep(random.randint(10, 20))
+                await asyncio.sleep(random.randint(5, 10))
     return None
 
 def _sess(status_uid, status_pw):
@@ -1161,23 +1131,23 @@ def load_user_started():
 load_user_started()
 
 # =============================================================================
-# STATUS MONITOR LOOP
+# STATUS MONITOR LOOP (RESTORED)
 # =============================================================================
 
 def status_monitor_loop_fixed(status_uid, status_pw):
-    time.sleep(10)
+    time.sleep(5)
     while spam_running:
         try:
             with user_started_lock:
                 targets_to_check = list(user_started_targets)
             if not targets_to_check:
-                time.sleep(5)
+                time.sleep(2.5)
                 continue
             try:
                 sx = _sess(status_uid, status_pw)
             except Exception as e:
-                print(f"[Monitor] Cannot get session: {e}. Retrying in 30s...")
-                time.sleep(30)
+                print(f"[Monitor] Cannot get session: {e}. Retrying in 15s...")
+                time.sleep(15)
                 continue
             for orig_uid in targets_to_check:
                 try:
@@ -1195,10 +1165,10 @@ def status_monitor_loop_fixed(status_uid, status_pw):
                                     f.write(f"{owner}\n")
                 except Exception as e:
                     print(f"[Monitor] Error checking {orig_uid}: {e}")
-            time.sleep(random.randint(3, 8))
+            time.sleep(random.randint(1, 4))
         except Exception as e:
             print(f"[Monitor] Loop error: {e}")
-            time.sleep(5)
+            time.sleep(2.5)
 
 # =============================================================================
 # FLASK WEB SERVER
@@ -1283,7 +1253,7 @@ def remove_target_from_file(uid):
 
 if __name__ == '__main__':
     threading.Thread(target=start_all_accounts, daemon=True).start()
-    time.sleep(10)
+    time.sleep(5)
     accounts = load_accounts()
     if accounts:
         status_uid, status_pw = accounts[0]
